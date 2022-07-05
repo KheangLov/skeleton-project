@@ -1,0 +1,19 @@
+<mat-form-field
+  appDynamicAttr
+  [appearance]="appearance" 
+  [attributeList]="wrapperAttributes"
+>
+  <mat-label>{{ label }}</mat-label>
+  <input 
+    matInput
+    appDynamicAttr
+    [type]="type" 
+    [placeholder]="placeholder"
+    [name]="name"
+    [attr.formControlName]="name"
+    [attributeList]="attributes"
+  >
+  <mat-error *ngIf="error">
+    {{ error }}
+  </mat-error>
+</mat-form-field>
