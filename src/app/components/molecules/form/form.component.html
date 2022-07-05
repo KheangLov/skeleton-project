@@ -1,1 +1,3 @@
-<p>form works!</p>
+<form [formGroup]="formData" (ngSubmit)="submit($event)">
+  <ng-content></ng-content>
+</form>

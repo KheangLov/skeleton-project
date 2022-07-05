@@ -16,4 +16,27 @@
       <mat-divider></mat-divider>
     </div>
   </div>
+  <app-form
+    [formData]="loginForm"
+    (formSubmitted)="onLoginSubmit($event)"
+  >
+    <app-input
+      label="Email"
+      type="email"
+      name="email"
+    ></app-input>
+    <app-input
+      label="Password"
+      type="password"
+      name="password"
+    ></app-input>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      class="w-100 fs-5 fw-bold py-2"
+    >
+      Login
+    </button>
+  </app-form>
 </app-auth>
