@@ -12,12 +12,12 @@ export class AdminV2Component {
   sidebarMenuList: Array<IMenu> = [
     {
       text: 'Dashboard',
-      link: '/dashboard',
+      link: '/v2/dashboard',
       icon: 'dashboard',
     },
     {
       text: 'User',
-      link: '/user',
+      link: '/v2/user',
       icon: 'person icon',
     }
   ];

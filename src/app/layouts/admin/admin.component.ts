@@ -17,7 +17,7 @@ export class AdminComponent {
     },
     {
       text: 'User',
-      link: '/',
+      link: '/user',
       icon: 'person icon',
     }
   ];
