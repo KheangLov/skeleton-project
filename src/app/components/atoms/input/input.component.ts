@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 
+import { getFieldErrorMessage } from 'src/app/helpers/validation';
 import { HTML_INPUT_TYPE, IAttribute, MATERIAL_INPUT_APPERANCE } from 'src/app/types/core';
 
 @Component({
@@ -36,11 +37,11 @@ export class InputComponent implements OnChanges {
       const { name } = this;
       const _formControl: any = this.formControl;
 
-      this.error = _formControl[name];
+      this.error = getFieldErrorMessage(_formControl[name]);
     }
   }
 
-  get formControl(): any {
+  get formControl() {
     return this.formGroup.controls;
   }
 

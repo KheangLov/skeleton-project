@@ -1,0 +1,18 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb justify-content-end">
+    <li
+      *ngFor="let item of items; let i = index"
+      class="breadcrumb-item"
+      [class.active]="i === (items.length - 1)"
+    >
+      <span *ngIf="i === (items.length - 1); else elseBlock;">
+        {{ item.text }}
+      </span>
+      <ng-template #elseBlock>
+        <a href="#" class="text-decoration-none text-white">
+          {{ item.text }}
+        </a>
+      </ng-template>
+    </li>
+  </ol>
+</nav>

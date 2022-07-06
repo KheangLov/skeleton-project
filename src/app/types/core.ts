@@ -10,3 +10,16 @@ export type HTML_BUTTON_TYPE = 'submit' | 'reset' | 'button';
 export type MATERIAL_INPUT_APPERANCE = 'legacy' | 'standard' | 'fill' | 'outline';
 
 export type MATERIAL_BUTTON_APPERANCE = 'raised' | 'flat' | 'stroked' | 'icon' | 'fab' | 'mini-fab' | '';
+
+export interface IMenu {
+  text: string;
+  icon?: string;
+  link?: string;
+  action?: Function;
+}
+
+export interface IBreadcrumb {
+  text: string;
+  icon?: string;
+  link?: string;
+}

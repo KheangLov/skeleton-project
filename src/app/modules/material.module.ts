@@ -14,6 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const components = [
   MatCommonModule,
@@ -31,6 +33,8 @@ const components = [
   MatTooltipModule,
   MatListModule,
   MatDialogModule,
+  MatToolbarModule,
+  MatSidenavModule,
 ];
 
 @NgModule({

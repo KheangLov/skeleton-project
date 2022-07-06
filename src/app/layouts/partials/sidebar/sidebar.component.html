@@ -1,0 +1,26 @@
+<mat-drawer-container class="sidebar-container">
+  <mat-drawer mode="side" opened class="sidebar">
+    <mat-list>
+      <a 
+        *ngFor="let menu of menuList"
+        mat-list-item
+        class="sidebar-item text-decoration-none text-white me-3"
+        [routerLink]="menu.link"
+        [routerLinkActive]="menu.link ? 'is_active' : 'is_disabled'"
+      >
+        <mat-icon
+          *ngIf="menu.icon"
+          mat-list-icon
+        >
+          {{ menu.icon }}
+        </mat-icon>
+        <span
+          mat-line
+        >
+          {{ menu.text }}
+        </span>
+      </a>
+    </mat-list>
+  </mat-drawer>
+  <ng-content></ng-content>
+</mat-drawer-container>

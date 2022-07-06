@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <div class="w-100">
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="w-100 d-inline-block">
+          <span class="ms-3 text-uppercase">Clock-IN</span>
+        </div>
+        <a 
+          *ngFor="let leftMenu of leftMenuList" 
+          mat-button
+          class="text-decoration-none text-white me-3"
+          [routerLink]="leftMenu.link"
+        >
+          <mat-icon
+            *ngIf="leftMenu.icon"
+          >
+            {{ leftMenu.icon }}
+          </mat-icon>
+          <span>
+            {{ leftMenu.text }}
+          </span>
+        </a>
+      </div>
+      <div class="text-decoration-none text-white ms-auto">
+        <a 
+          *ngFor="let rightMenu of rightMenuList" 
+          mat-button
+          class="text-decoration-none text-white me-3"
+          [routerLink]="rightMenu.link"
+          (click)="rightMenu.action && rightMenu.action()"
+        >
+          <mat-icon
+            *ngIf="rightMenu.icon"
+          >
+            {{ rightMenu.icon }}
+          </mat-icon>
+          <span>
+            {{ rightMenu.text }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

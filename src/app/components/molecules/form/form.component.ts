@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,13 +7,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent {
+export class FormComponent implements OnChanges {
   
   @Input() formData: FormGroup = new FormGroup({});
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   constructor(private _alertBar: MatSnackBar) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Form: ', changes);
+  }
 
   submit(event: SubmitEvent) {
     event.preventDefault();

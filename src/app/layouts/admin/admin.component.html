@@ -1,1 +1,16 @@
-<p>admin works!</p>
+<app-navbar
+  [rightMenuList]="rightMenuList"
+  [leftMenuList]="leftMenuList"
+></app-navbar>
+<app-sidebar
+  [menuList]="sidebarMenuList"
+>
+  <div class="m-4">
+    <app-breadcrumb
+      [items]="breadcrumbList"
+    ></app-breadcrumb>
+    <mat-card>
+      <ng-content></ng-content>
+    </mat-card>
+  </div>
+</app-sidebar>
