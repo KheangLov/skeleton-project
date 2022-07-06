@@ -1,0 +1,16 @@
+<mat-card class="h-100">
+  <a
+    *ngFor="let menu of menuList"
+    mat-button
+    class="w-100 fs-6 py-2 text-start"
+    [routerLink]="menu.link"
+  >
+    <mat-icon
+      *ngIf="menu.icon"
+      mat-list-icon
+    >
+      {{ menu.icon }}
+    </mat-icon>
+    <span class="ms-3 mt-2">{{ menu.text }}</span>
+  </a>
+</mat-card>

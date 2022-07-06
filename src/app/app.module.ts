@@ -12,6 +12,8 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UserComponent } from './pages/admin/user/user.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
+import { DashboardV2Component } from './pages/admin/dashboard-v2/dashboard-v2.component';
+import { UserV2Component } from './pages/admin/user-v2/user-v2.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { RegisterComponent } from './pages/auth/register/register.component';
     RegisterComponent,
     DashboardComponent,
     UserComponent,
+    DashboardV2Component,
+    UserV2Component,
   ],
   imports: [
     BrowserModule,

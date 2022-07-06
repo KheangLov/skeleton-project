@@ -23,3 +23,8 @@ export interface IBreadcrumb {
   icon?: string;
   link?: string;
 }
+
+export interface ILayoutVersion {
+  text: string;
+  path?: string; 
+}

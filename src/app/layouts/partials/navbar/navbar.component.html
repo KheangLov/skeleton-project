@@ -22,7 +22,14 @@
         </a>
       </div>
       <div class="text-decoration-none text-white ms-auto">
-        <a 
+        <a
+          mat-button
+          class="text-decoration-none text-white me-3"
+          [routerLink]="url.path"
+        >
+          {{ url.text }}
+        </a>
+        <a
           *ngFor="let rightMenu of rightMenuList" 
           mat-button
           class="text-decoration-none text-white me-3"

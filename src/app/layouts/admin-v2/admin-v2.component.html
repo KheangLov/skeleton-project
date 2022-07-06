@@ -1,0 +1,25 @@
+<app-navbar
+  [rightMenuList]="rightMenuList"
+  [leftMenuList]="leftMenuList"
+></app-navbar>
+
+<div class="flex-wrapper m-4">
+  <div fxFill fxLayout="column">
+    <div fxLayout="row" fxFill fxLayoutGap="20">
+      <app-sidebar-v2
+        fxFlex="20"
+        [menuList]="sidebarMenuList"
+      >
+      </app-sidebar-v2>
+    
+      <div fxFlex="80">
+        <mat-card>
+          <app-breadcrumb
+            [items]="breadcrumbList"
+          ></app-breadcrumb>
+          <ng-content></ng-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
