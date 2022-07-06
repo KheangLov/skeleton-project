@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import * as _ from 'lodash';
 
 import { HTML_INPUT_TYPE, IAttribute, MATERIAL_INPUT_APPERANCE } from 'src/app/types/core';
 
@@ -7,7 +9,7 @@ import { HTML_INPUT_TYPE, IAttribute, MATERIAL_INPUT_APPERANCE } from 'src/app/t
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnChanges {
 
   @Input() label: string = '';
 
@@ -17,17 +19,29 @@ export class InputComponent implements OnInit {
 
   @Input() placeholder: string = '';
 
-  @Input() error: string = '';
+  @Input() formGroup: FormGroup = new FormGroup({});
 
   @Input() appearance: MATERIAL_INPUT_APPERANCE = 'outline';
 
   @Input() attributes: Array<IAttribute> = [];
-  
+
   @Input() wrapperAttributes: Array<IAttribute> = [];
+
+  error: string = '';
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!_.isEmpty(changes['formGroup'])) {
+      const { name } = this;
+      const _formControl: any = this.formControl;
+
+      this.error = _formControl[name];
+    }
+  }
+
+  get formControl(): any {
+    return this.formGroup.controls;
   }
 
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FormComponent } from '../components/molecules/form/form.component';
 import { TabComponent } from '../components/molecules/tab/tab.component';
@@ -11,7 +11,7 @@ const components = [
 
 @NgModule({
   declarations: components,
-  imports: [ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   exports: components,
 })
 export class MoleculeModule {}

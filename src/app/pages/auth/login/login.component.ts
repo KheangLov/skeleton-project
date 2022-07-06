@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
 
-  loginForm = this._loginFormBuilder.group({
+  loginForm: FormGroup = this._loginFormBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
@@ -18,7 +18,7 @@ export class LoginComponent {
   ) { }
 
   onLoginSubmit(formData: FormGroup) {
-    console.log(formData);
+    console.log(this.loginForm);
   }
 
 }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { InputComponent } from '../components/atoms/input/input.component';
@@ -14,7 +15,7 @@ const components = [
 
 @NgModule({
   declarations: [...components, DynamicAttrDirective],
-  imports: [RouterModule, MaterialModule, CommonModule],
+  imports: [RouterModule, MaterialModule, CommonModule, FormsModule, ReactiveFormsModule],
   exports: components,
 })
 export class AtomModule {}

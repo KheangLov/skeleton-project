@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 import { forEach, isEmpty } from 'lodash';
 
 import { IAttribute } from '../types/core';
@@ -10,21 +10,27 @@ export class DynamicAttrDirective implements AfterViewInit {
 
   @Input() attributeList: Array<IAttribute> = [];
 
-  constructor(private _host: ElementRef) { }
+  constructor(
+    private _host: ElementRef, 
+    private _renderer: Renderer2
+  ) { }
 
   ngAfterViewInit(): void {
+    this._initAttrs(this._host.nativeElement);
+  }
+
+  private _initAttrs(element: HTMLElement): void {
     forEach(
       this.attributeList, 
       ({ name, value }: IAttribute) => {
-        let _value = this._host.nativeElement[name].value;
+        const _classes = element.getAttribute(name);
+        let _value = value;
 
-        if (!isEmpty(_value)) {
-          _value += ` ${value}`;
-        } else {
-          _value = value;
+        if (!isEmpty(_classes)) {
+          _value += ` ${_classes}`;
         }
 
-        this._host.nativeElement[name] = _value;
+        this._renderer.setAttribute(element, name, _value);
       }
     );
   }

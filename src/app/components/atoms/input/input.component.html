@@ -3,16 +3,17 @@
   class="w-100"
   [appearance]="appearance"
   [attributeList]="wrapperAttributes"
+  [formGroup]="formGroup"
 >
   <mat-label>{{ label }}</mat-label>
-  <input 
+  <input
     matInput
     appDynamicAttr
     [type]="type" 
     [placeholder]="placeholder"
     [name]="name"
-    [attr.formControlName]="name"
     [attributeList]="attributes"
+    [formControlName]="name"
   >
   <mat-error *ngIf="error">
     {{ error }}
