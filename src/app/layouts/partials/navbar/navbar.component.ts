@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { join, map, drop } from 'lodash';
+import { join, map, drop, includes, omit, values } from 'lodash';
 
 import { ILayoutVersion, IMenu } from 'src/app/types/core';
 
@@ -15,10 +15,7 @@ export class NavbarComponent {
 
   @Input() leftMenuList: Array<IMenu> = [];
 
-  url: ILayoutVersion = {
-    text: '',
-    path: '',
-  };
+  urls: Array<ILayoutVersion> = [];
 
   constructor(private _route: ActivatedRoute) {
     this._subcribeUrl();
@@ -28,19 +25,35 @@ export class NavbarComponent {
     this._route.url
       .subscribe(urls => {
         const { path: _firstSegement } = urls[0];
-        let text = 'V2';
-        let path = '/v2';
+        let _objects: { [key: string]: any } = {
+          v1: {
+            text: 'V1',
+            path: '',
+          },
+          v2: {
+            text: 'V2',
+            path: '/v2',
+          },
+          v3: {
+            text: 'V3',
+            path: '/v3',
+          }
+        };
         let _paths = map(urls, url => url.path);
 
-        if (_firstSegement === 'v2') {
-          text = 'V1';
-          path = '';
+        if (includes(['v2', 'v3'], _firstSegement)) {
+          _objects = omit(_objects, [_firstSegement]);
           _paths = drop(_paths);
+        } else {
+          _objects = omit(_objects, ['v1']);
         }
 
-        path += `/${join(_paths, '/')}`;
+        const _newObjects = map(values(_objects), _object => {
+          _object.path += `/${join(_paths, '/')}`;
+          return _object;
+        });
 
-        this.url = { text, path };
+        this.urls = [...this.urls, ..._newObjects];
       });
   }
 

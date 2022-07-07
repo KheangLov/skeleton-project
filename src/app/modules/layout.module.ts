@@ -11,15 +11,23 @@ import { AdminV2Component } from '../layouts/admin-v2/admin-v2.component';
 import { SidebarComponent } from '../layouts/partials/sidebar/sidebar.component';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AdminV3Component } from '../layouts/admin-v3/admin-v3.component';
+import { NavbarV2Component } from '../layouts/partials/navbar-v2/navbar-v2.component';
+import { ContentComponent } from '../layouts/partials/content/content.component';
+import { BodyComponent } from '../layouts/partials/body/body.component';
 
 const components = [
   AdminComponent,
   AuthComponent,
   NavbarComponent,
+  NavbarV2Component,
   SidebarComponent,
   BreadcrumbComponent,
   AdminV2Component,
   SidebarV2Component,
+  AdminV3Component,
+  ContentComponent,
+  BodyComponent,
 ];
 
 @NgModule({
