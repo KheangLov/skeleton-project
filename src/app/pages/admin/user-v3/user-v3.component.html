@@ -1,3 +1,7 @@
 <app-admin-v3>
-  User
+  <app-table
+    [dataList]="users"
+    [columns]="columns"
+    [resultLength]="users.length"
+  ></app-table>
 </app-admin-v3>

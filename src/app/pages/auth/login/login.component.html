@@ -1,10 +1,11 @@
 <app-auth>
-  <a routerLink="/register" mat-raised-button class="w-100 fs-5 fw-bold py-2 mb-3 bg-light text-dark">
+  <button 
+    mat-raised-button 
+    class="w-100 fs-5 fw-bold py-2 bg-light text-dark"
+    (click)="loginViaGoogle()"
+  >
     Google login
-  </a>
-  <a routerLink="/register" mat-raised-button color="warn" class="w-100 fs-5 fw-bold py-2">
-    Register a new account
-  </a>
+  </button>
   <div class="d-flex align-items-center justify-content-center py-4">
     <div class="w-100">
       <mat-divider></mat-divider>

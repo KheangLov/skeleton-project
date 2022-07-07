@@ -1,3 +1,11 @@
+import { map } from 'lodash';
+
+import { environment } from 'src/environments/environment';
+
+const { apiUrl } = environment;
+
+export const BEARER_EXCEPTION_ROUTES = map(['login', 'google'], route => `${apiUrl}/${route}`);
+
 export interface IAttribute {
   name: string;
   value: any;
@@ -27,4 +35,10 @@ export interface IBreadcrumb {
 export interface ILayoutVersion {
   text: string;
   path?: string; 
+}
+
+export interface IColumn {
+  columnDef: string;
+  header: string;
+  cell: Function;
 }

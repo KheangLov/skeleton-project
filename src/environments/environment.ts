@@ -2,8 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { GOOGLE_CLIENT_ID, API_URL } from "./env";
+
 export const environment = {
-  production: false
+  production: false,
+  googleClientId: GOOGLE_CLIENT_ID,
+  apiUrl: API_URL,
 };
 
 /*
