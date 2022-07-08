@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GoogleAuthService } from 'ng-gapi';
-import { BehaviorSubject, catchError, filter, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, filter, map, Observable, of, throwError } from 'rxjs';
 import { isEmpty, omit } from 'lodash';
 
 import { ILogin, IUser } from 'src/app/types/user';
@@ -26,20 +26,13 @@ export class AuthService {
 
   private _apiUserUrl = `${this._apiUrl}/users`;
 
-  private _userSubject: BehaviorSubject<IUser>;
-
   constructor(
     private _http: HttpClient,
     private _router: Router,
     private _alertBar: MatSnackBar,
+    private _ngZone: NgZone,
     private _googleAuthService: GoogleAuthService,
-  ) {
-    this._userSubject = new BehaviorSubject<any>(this.currentUser);
-  }
-
-  public get userValue() {
-    return this._userSubject.value;
-  }
+  ) {}
 
   public get token() {
     return localStorage.getItem('access_token');
@@ -49,13 +42,15 @@ export class AuthService {
     return localStorage.getItem('refresh_token');
   }
 
-  public get currentUser() {
+  public get currentUser(): IUser {
     const _user = localStorage.getItem('user');
+
     return !isEmpty(_user) && JSON.parse(_user || '{}');
   }
 
   public get isLoggedIn(): boolean {
     const _authToken = this.token;
+
     return !isEmpty(_authToken) ? true : false;
   }
 
@@ -91,12 +86,15 @@ export class AuthService {
       .subscribe(({ accessToken, refreshToken }: any) => {
         this.token = accessToken;
         this.refreshToken = refreshToken;
+
         window.location.reload();
       });
   }
 
   login(data: ILogin): Observable<any> {
-    return this._http.post(`${this._apiUrl}/login`, data, headers);
+    const _observable = this._http.post(`${this._apiUrl}/login`, data, headers);
+
+    return this._getReponseData(_observable);
   }
 
   doLogout() {
@@ -104,22 +102,16 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
 
-    this._alertBar.open('Session timeout!', 'Close', {
-      duration: 3000,
-      panelClass: ['error-message']
-    });
+    this._alertMessage('Session timeout!', ['error-message']);
 
-    this._router.navigate(['login']);
+    this._redirectTo('login');
   }
 
-  loginViaGoogle() {
-    this._googleAuthService.getAuth()
-      .subscribe(auth =>
-        auth.signIn()
-          .then(
-            res => this._loginSuccessHandler(res), 
-            err => console.log(err)
-          )
+  loginViaGoogle(): Observable<any> {
+    return this._googleAuthService.getAuth()
+      .pipe(
+        map(this._prepareAuth.bind(this)),
+        catchError(() => of(null)),
       );
   }
 
@@ -135,10 +127,60 @@ export class AuthService {
     return this._http.put(`${this._apiUserUrl}/change-password/${data.id}`, omit(data, ['id']), headers);
   }
 
-  private _loginSuccessHandler(res: any) {
-    const { access_token } = res.Cc;
-    
-    return this._http.post(`${this._apiUrl}/google`, { access_token }, headers)
-      .subscribe(res => console.log(res));
+  private async _prepareAuth(auth: any): Promise<Observable<any>> {
+    try {
+      const _res = await auth.signIn();
+      this._loginSuccessHandler(_res).subscribe();
+      return of(null);
+    } catch(err) {
+      return throwError(err);
+    }
+  }
+
+  private _loginSuccessHandler({ Cc: { access_token } }: any): Observable<any> {
+    const _observable = this._http.post(`${this._apiUrl}/google`, { access_token }, headers);
+
+    return this._getReponseData(_observable);
+  }
+
+  private _getReponseData(observable: Observable<any>): Observable<any> {
+    return observable
+      .pipe(
+        map(({ data, message, success }) => {
+          const { token: { accessToken, refreshToken }, user } = data;
+
+          this.token = accessToken;
+          this.refreshToken = refreshToken;
+          this.currentUser = user;
+
+          if (success) {
+            this._alertMessage(message);
+          }
+
+          this._redirectTo('dashboard');
+
+          return of(null);
+        }),
+        catchError(({ error: { message, errors } }) => {
+          if (!isEmpty(message)) {
+            this._alertMessage(message);
+          }
+
+          return of(errors);
+        }),
+        filter(res => !isEmpty(res))
+      );
+  }
+
+  private _redirectTo(route: string) {
+    this._ngZone.run(() => this._router.navigate([route]));
+  }
+
+  private _alertMessage(
+    message: string, 
+    panelClass: Array<string> = [],
+    duration: number = 3000
+  ): void {
+    this._alertBar.open(message, 'Close', { duration, panelClass });
   }
 }

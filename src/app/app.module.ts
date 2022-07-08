@@ -23,9 +23,10 @@ import { UserV3Component } from './pages/admin/user-v3/user-v3.component';
 import { DashboardV3Component } from './pages/admin/dashboard-v3/dashboard-v3.component';
 import { AuthService } from './services/auth.service';
 import { environment } from 'src/environments/environment';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AuthInterceptor } from './middlewares/interceptors/auth.interceptor';
+import { AdminV4Component } from './layouts/admin-v4/admin-v4.component';
 
-let gapiClientConfig: NgGapiClientConfig = {
+const gapiClientConfig: NgGapiClientConfig = {
   client_id: environment.googleClientId,
   discoveryDocs: ["https://analyticsreporting.googleapis.com/$discovery/rest?version=v4"],
 };
@@ -40,6 +41,7 @@ let gapiClientConfig: NgGapiClientConfig = {
     UserV2Component,
     UserV3Component,
     DashboardV3Component,
+    AdminV4Component,
   ],
   imports: [
     BrowserModule,

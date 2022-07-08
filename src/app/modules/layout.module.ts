@@ -15,12 +15,15 @@ import { AdminV3Component } from '../layouts/admin-v3/admin-v3.component';
 import { NavbarV2Component } from '../layouts/partials/navbar-v2/navbar-v2.component';
 import { ContentComponent } from '../layouts/partials/content/content.component';
 import { BodyComponent } from '../layouts/partials/body/body.component';
+import { NavbarV3Component } from '../layouts/partials/navbar-v3/navbar-v3.component';
+import { BottombarComponent } from '../layouts/partials/bottombar/bottombar.component';
 
 const components = [
   AdminComponent,
   AuthComponent,
   NavbarComponent,
   NavbarV2Component,
+  NavbarV3Component,
   SidebarComponent,
   BreadcrumbComponent,
   AdminV2Component,
@@ -28,6 +31,7 @@ const components = [
   AdminV3Component,
   ContentComponent,
   BodyComponent,
+  BottombarComponent,
 ];
 
 @NgModule({

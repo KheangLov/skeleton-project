@@ -1,0 +1,29 @@
+<div class="mat-bottom-bar mat-tab-group-inverted-header">
+  <nav 
+    mat-tab-nav-bar
+    mat-align-tabs="center"
+    class="mat-tab-header"
+  >
+    <a 
+      *ngFor="let menu of menuList"
+      mat-tab-link
+      class="text-decoration-none text-white me-3"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+      [routerLink]="menu.link"
+    >
+      <mat-icon
+        *ngIf="menu.icon"
+        class="me-2"
+      >
+        {{ menu.icon }}
+      </mat-icon>
+      <span
+        mat-line
+      >
+        {{ menu.text }}
+      </span>
+    </a>
+  </nav>
+</div>

@@ -1,11 +1,7 @@
-<app-navbar
-  [rightMenuList]="rightMenuList"
-  [leftMenuList]="leftMenuList"
-></app-navbar>
-<app-sidebar
-  [menuList]="sidebarMenuList"
->
-  <div class="m-4">
+<app-navbar-v3></app-navbar-v3>
+
+<main class="main-content">
+  <div class="container my-4">
     <app-breadcrumb
       [items]="breadcrumbList"
     ></app-breadcrumb>
@@ -13,4 +9,8 @@
       <ng-content></ng-content>
     </mat-card>
   </div>
-</app-sidebar>
+</main>
+
+<app-bottombar
+  [menuList]="sidebarMenuList"
+></app-bottombar>

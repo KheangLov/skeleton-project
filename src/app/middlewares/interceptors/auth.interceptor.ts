@@ -3,8 +3,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from "@a
 import { catchError, mergeMap, Observable, of } from "rxjs";
 import { includes } from "lodash";
 
-import { AuthService } from "../services/auth.service";
-import { BEARER_EXCEPTION_ROUTES } from "../types/core";
+import { AuthService } from "../../services/auth.service";
+import { BEARER_EXCEPTION_ROUTES } from "../../types/core";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -43,7 +43,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private _refreshTokenIfCan(canRefreshToken: boolean): Observable<boolean> {
     if (canRefreshToken) {
-      this._authService.refreshToken();
+      this._authService.refreshTokenAction();
     } else {
       this._authService.doLogout();
     }
@@ -52,11 +52,11 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private _setHeaderToken(req: HttpRequest<any>) {
-    const _authToken = this._authService.token;
+    const { token } = this._authService;
 
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${_authToken}`
+        Authorization: `Bearer ${token}`
       }
     });
 

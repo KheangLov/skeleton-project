@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './middlewares/guards/auth.guard';
+import { PermissionGuard } from './middlewares/guards/permission.guard';
 import { DashboardV2Component } from './pages/admin/dashboard-v2/dashboard-v2.component';
 import { DashboardV3Component } from './pages/admin/dashboard-v3/dashboard-v3.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
@@ -18,30 +20,37 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [PermissionGuard],
   },
   {
     path: 'user',
     component: UserComponent,
+    canActivate: [PermissionGuard],
   },
   {
     path: 'v2/dashboard',
     component: DashboardV2Component,
+    canActivate: [PermissionGuard],
   },
   {
     path: 'v2/user',
     component: UserV2Component,
+    canActivate: [PermissionGuard],
   },
   {
     path: 'v3/dashboard',
     component: DashboardV3Component,
+    canActivate: [PermissionGuard],
   },
   {
     path: 'v3/user',
     component: UserV3Component,
+    canActivate: [PermissionGuard],
   },
 ];
 

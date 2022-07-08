@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const components = [
   MatCommonModule,
@@ -39,6 +40,7 @@ const components = [
   MatSidenavModule,
   MatTableModule,
   MatPaginatorModule,
+  MatTabsModule,
 ];
 
 @NgModule({

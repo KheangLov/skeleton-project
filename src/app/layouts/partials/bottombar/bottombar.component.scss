@@ -1,0 +1,10 @@
+.mat-bottom-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background: #343434;
+  
+  .mat-tab-link {
+    height: 60px;
+  }
+}
