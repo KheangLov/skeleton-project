@@ -1,6 +1,31 @@
-<mat-toolbar>
-  <div class="w-100 text-center">
-    <span class="ms-3 text-uppercase">Clock-IN</span>
+<mat-toolbar class="p-0">
+  <div class="container">
+    <div class="d-flex justify-content-between">
+      <span class="text-uppercase mx-3">Clock-IN</span>
+      <div>
+        <button mat-button class="p-0" [matMenuTriggerFor]="beforeMenu">
+          <mat-icon>person outline icon</mat-icon>
+        </button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <a
+            *ngFor="let menu of menuList"
+            mat-menu-item
+            class="text-center"
+            [routerLink]="menu.link"
+            (click)="menu.action && menu.action()"
+          >
+            <mat-icon
+              *ngIf="menu.icon"
+            >
+              {{ menu.icon }}
+            </mat-icon>
+            <span>
+              {{ menu.text }}
+            </span>
+          </a>
+        </mat-menu>
+      </div>
+    </div>
   </div>
 </mat-toolbar>
 

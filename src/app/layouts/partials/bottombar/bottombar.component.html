@@ -3,11 +3,11 @@
     mat-tab-nav-bar
     mat-align-tabs="center"
     class="mat-tab-header"
+    [attr.mat-stretch-tabs]="stretch"
   >
     <a 
       *ngFor="let menu of menuList"
       mat-tab-link
-      class="text-decoration-none text-white me-3"
       routerLinkActive
       #rla="routerLinkActive"
       [active]="rla.isActive"
@@ -19,11 +19,9 @@
       >
         {{ menu.icon }}
       </mat-icon>
-      <span
-        mat-line
-      >
+      <div>
         {{ menu.text }}
-      </span>
+      </div>
     </a>
   </nav>
 </div>

@@ -1,19 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GoogleAuthService } from 'ng-gapi';
 import { BehaviorSubject, catchError, filter, map, Observable, of, throwError } from 'rxjs';
-import { isEmpty, omit } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { ILogin, IUser } from 'src/app/types/user';
 import { environment } from 'src/environments/environment';
-
-const headers = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
+import { httpHeaders, PREFIX_ROUTE } from '../helpers/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +18,6 @@ export class AuthService {
   canRefreshToken$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   private _apiUrl = environment.apiUrl;
-
-  private _apiUserUrl = `${this._apiUrl}/users`;
 
   constructor(
     private _http: HttpClient,
@@ -74,7 +67,7 @@ export class AuthService {
       _params.email = currentUser.email;
     }
 
-    this._http.post(`${environment.apiUrl}/refresh-token`, _params, headers)
+    this._http.post(`${environment.apiUrl}/refresh-token`, _params, httpHeaders)
       .pipe(
         catchError(() => {
           this.canRefreshToken$.next(false);
@@ -92,7 +85,7 @@ export class AuthService {
   }
 
   login(data: ILogin): Observable<any> {
-    const _observable = this._http.post(`${this._apiUrl}/login`, data, headers);
+    const _observable = this._http.post(`${this._apiUrl}/login`, data, httpHeaders);
 
     return this._getReponseData(_observable);
   }
@@ -115,18 +108,6 @@ export class AuthService {
       );
   }
 
-  getUsers({ sort, order, page, perPage, search }: any): Observable<any> {
-    return this._http.get(`${this._apiUserUrl}?sort=${sort}&order=${order}&page=${page}&perPage=${perPage}&search=${search ? search : ''}`);
-  }
-
-  updateUser(data: any): Observable<any> {
-    return this._http.patch(`${this._apiUserUrl}/${data.id}`, omit(data, ['id']), headers);
-  }
-  
-  changeUserPassword(data: any): Observable<any> {
-    return this._http.put(`${this._apiUserUrl}/change-password/${data.id}`, omit(data, ['id']), headers);
-  }
-
   private async _prepareAuth(auth: any): Promise<Observable<any>> {
     try {
       const _res = await auth.signIn();
@@ -138,7 +119,7 @@ export class AuthService {
   }
 
   private _loginSuccessHandler({ Cc: { access_token } }: any): Observable<any> {
-    const _observable = this._http.post(`${this._apiUrl}/google`, { access_token }, headers);
+    const _observable = this._http.post(`${this._apiUrl}/google`, { access_token }, httpHeaders);
 
     return this._getReponseData(_observable);
   }
@@ -173,7 +154,9 @@ export class AuthService {
   }
 
   private _redirectTo(route: string) {
-    this._ngZone.run(() => this._router.navigate([route]));
+    this._ngZone.run(() => 
+      this._router.navigate([`/${PREFIX_ROUTE}/${route}`])
+    );
   }
 
   private _alertMessage(

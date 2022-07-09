@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 import { IBreadcrumb } from 'src/app/types/core';
 
 @Component({
@@ -6,13 +7,14 @@ import { IBreadcrumb } from 'src/app/types/core';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent {
 
   @Input() items: Array<IBreadcrumb> = [];
 
-  constructor() { }
+  isLastLength(index: number): boolean {
+    const _lastItem = this.items.length - 1;
 
-  ngOnInit(): void {
+    return index === _lastItem;
   }
 
 }

@@ -1,17 +1,20 @@
 import { AuthService } from "../services/auth.service";
 import { IMenu, IBreadcrumb } from "../types/core";
+import { PREFIX_ROUTE } from "../helpers/core";
 
 export class Admin {
   
+  prefixRoute: string = PREFIX_ROUTE;
+
   sidebarMenuList: Array<IMenu> = [
     {
       text: 'Dashboard',
-      link: '/dashboard',
+      link: `/${PREFIX_ROUTE}/dashboard`,
       icon: 'dashboard',
     },
     {
       text: 'User',
-      link: '/user',
+      link: `/${PREFIX_ROUTE}/user`,
       icon: 'person icon',
     }
   ];

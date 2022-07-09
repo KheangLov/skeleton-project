@@ -1,10 +1,12 @@
-<app-navbar-v3></app-navbar-v3>
+<app-navbar-v3
+  [menuList]="menuList"
+></app-navbar-v3>
 
 <main class="main-content">
   <div class="container my-4">
-    <app-breadcrumb
+    <!-- <app-breadcrumb
       [items]="breadcrumbList"
-    ></app-breadcrumb>
+    ></app-breadcrumb> -->
     <mat-card>
       <ng-content></ng-content>
     </mat-card>

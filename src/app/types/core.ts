@@ -40,5 +40,6 @@ export interface ILayoutVersion {
 export interface IColumn {
   columnDef: string;
   header: string;
+  isHidden: boolean;
   cell: Function;
 }

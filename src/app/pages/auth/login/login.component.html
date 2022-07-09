@@ -6,7 +6,7 @@
   >
     Google login
   </button>
-  <div class="d-flex align-items-center justify-content-center py-4">
+  <div class="d-flex align-items-center justify-content-center pt-4">
     <div class="w-100">
       <mat-divider></mat-divider>
     </div>
@@ -22,12 +22,14 @@
     (formSubmitted)="onLoginSubmit($event)"
   >
     <app-input
+      appearance="standard"
       label="Email"
       type="email"
       name="email"
       [formGroup]="loginForm"
     ></app-input>
     <app-input
+      appearance="standard"
       label="Password"
       type="password"
       name="password"
@@ -37,7 +39,7 @@
       mat-raised-button
       type="submit"
       color="primary"
-      class="w-100 fs-5 fw-bold py-2"
+      class="w-100 fs-5 fw-bold py-2 mt-3"
     >
       Login
     </button>

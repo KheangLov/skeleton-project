@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { IMenu } from 'src/app/types/core';
 
 @Component({
   selector: 'app-navbar-v3',
@@ -8,5 +9,7 @@ import { Component, Input } from '@angular/core';
 export class NavbarV3Component {
 
   @Input() title = 'Clock-IN';
+
+  @Input() menuList: Array<IMenu> = [];
 
 }

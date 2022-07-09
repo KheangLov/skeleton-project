@@ -21,10 +21,10 @@ import { DashboardV2Component } from './pages/admin/dashboard-v2/dashboard-v2.co
 import { UserV2Component } from './pages/admin/user-v2/user-v2.component';
 import { UserV3Component } from './pages/admin/user-v3/user-v3.component';
 import { DashboardV3Component } from './pages/admin/dashboard-v3/dashboard-v3.component';
-import { AuthService } from './services/auth.service';
 import { environment } from 'src/environments/environment';
 import { AuthInterceptor } from './middlewares/interceptors/auth.interceptor';
 import { AdminV4Component } from './layouts/admin-v4/admin-v4.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const gapiClientConfig: NgGapiClientConfig = {
   client_id: environment.googleClientId,
@@ -42,6 +42,7 @@ const gapiClientConfig: NgGapiClientConfig = {
     UserV3Component,
     DashboardV3Component,
     AdminV4Component,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,6 @@ const gapiClientConfig: NgGapiClientConfig = {
     }),
   ],
   providers: [
-    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

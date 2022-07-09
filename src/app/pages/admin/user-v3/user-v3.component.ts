@@ -51,28 +51,7 @@ export class UserV3Component {
 
   users: Array<IUserData> = [];
 
-  columns: Array<IColumn> = [
-    {
-      columnDef: 'id',
-      header: 'ID',
-      cell: (element: IUserData) => element.id,
-    },
-    {
-      columnDef: 'name',
-      header: 'Name',
-      cell: (element: IUserData) => element.name,
-    },
-    {
-      columnDef: 'progress',
-      header: 'Progress',
-      cell: (element: IUserData) => element.progress,
-    },
-    {
-      columnDef: 'fruit',
-      header: 'Fruit',
-      cell: (element: IUserData) => element.fruit,
-    },
-  ];
+  columns: Array<IColumn> = [];
 
   constructor() {
     this.users = Array.from({length: 100}, (_, k) => createNewUser((k + 1).toString()));

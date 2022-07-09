@@ -17,6 +17,7 @@ import { ContentComponent } from '../layouts/partials/content/content.component'
 import { BodyComponent } from '../layouts/partials/body/body.component';
 import { NavbarV3Component } from '../layouts/partials/navbar-v3/navbar-v3.component';
 import { BottombarComponent } from '../layouts/partials/bottombar/bottombar.component';
+import { BlankComponent } from '../layouts/blank/blank.component';
 
 const components = [
   AdminComponent,
@@ -32,6 +33,7 @@ const components = [
   ContentComponent,
   BodyComponent,
   BottombarComponent,
+  BlankComponent,
 ];
 
 @NgModule({

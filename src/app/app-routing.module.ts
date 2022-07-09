@@ -10,47 +10,76 @@ import { UserV2Component } from './pages/admin/user-v2/user-v2.component';
 import { UserV3Component } from './pages/admin/user-v3/user-v3.component';
 import { UserComponent } from './pages/admin/user/user.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { PREFIX_ROUTE } from './helpers/core';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+const redirectToLogin = `/${PREFIX_ROUTE}/login`;
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: redirectToLogin,
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [AuthGuard],
+    path: PREFIX_ROUTE,
+    children: [
+      {
+        path: '',
+        redirectTo: redirectToLogin,
+        pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'user',
+        component: UserComponent,
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'v2',
+        children: [
+          {
+            path: 'dashboard',
+            component: DashboardV2Component,
+            canActivate: [PermissionGuard],
+          },
+          {
+            path: 'user',
+            component: UserV2Component,
+            canActivate: [PermissionGuard],
+          },
+        ]
+      },
+      {
+        path: 'v3',
+        children: [
+          {
+            path: 'dashboard',
+            component: DashboardV3Component,
+            canActivate: [PermissionGuard],
+          },
+          {
+            path: 'user',
+            component: UserV3Component,
+            canActivate: [PermissionGuard],
+          },
+        ]
+      },
+    ]
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [PermissionGuard],
-  },
-  {
-    path: 'user',
-    component: UserComponent,
-    canActivate: [PermissionGuard],
-  },
-  {
-    path: 'v2/dashboard',
-    component: DashboardV2Component,
-    canActivate: [PermissionGuard],
-  },
-  {
-    path: 'v2/user',
-    component: UserV2Component,
-    canActivate: [PermissionGuard],
-  },
-  {
-    path: 'v3/dashboard',
-    component: DashboardV3Component,
-    canActivate: [PermissionGuard],
-  },
-  {
-    path: 'v3/user',
-    component: UserV3Component,
-    canActivate: [PermissionGuard],
+    path: '**',
+    component: NotFoundComponent,
+    pathMatch: 'full',
   },
 ];
 

@@ -1,90 +1,94 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { isEmpty, upperCase } from 'lodash';
+import { Subject, takeUntil, filter, map, Observable, of } from 'rxjs';
 
+import { CoreService } from 'src/app/services/core.service';
+import { UserService } from 'src/app/services/user.service';
 import { IColumn } from 'src/app/types/core';
-
-interface IUserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-const FRUITS = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-
-const NAMES = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
+import { IList, IUser, IUserResponse } from 'src/app/types/user';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent {
+export class UserComponent implements OnDestroy {
 
-  users: Array<IUserData> = [];
+  users: Array<IUser> = [];
+
+  resultLength = 0;
 
   columns: Array<IColumn> = [
     {
       columnDef: 'id',
       header: 'ID',
-      cell: (element: IUserData) => element.id,
+      isHidden: true,
+      cell: (element: IUser) => element.id,
     },
     {
       columnDef: 'name',
       header: 'Name',
-      cell: (element: IUserData) => element.name,
+      isHidden: false,
+      cell: (element: IUser) => element.name,
     },
     {
-      columnDef: 'progress',
-      header: 'Progress',
-      cell: (element: IUserData) => element.progress,
+      columnDef: 'email',
+      header: 'Email',
+      isHidden: false,
+      cell: (element: IUser) => element.email,
     },
     {
-      columnDef: 'fruit',
-      header: 'Fruit',
-      cell: (element: IUserData) => element.fruit,
+      columnDef: 'role',
+      header: 'Role',
+      isHidden: false,
+      cell: (element: IUser) => upperCase(element.role),
+    },
+    {
+      columnDef: 'createdAt',
+      header: 'Created At',
+      isHidden: false,
+      cell: (element: IUser) => element.createdAt,
+    },
+    {
+      columnDef: 'updatedAt',
+      header: 'Updated At',
+      isHidden: false,
+      cell: (element: IUser) => element.updatedAt,
     },
   ];
 
-  constructor() {
-    this.users = Array.from({length: 100}, (_, k) => createNewUser((k + 1).toString()));
+  protected _onDestroy$: Subject<void> = new Subject<void>();
+
+  constructor(
+    private _userService: UserService,
+    private _coreService: CoreService
+  ) {
+    this._subscribeListParam();
   }
 
-}
+  ngOnDestroy(): void {
+    this._onDestroy$.next();
+    this._onDestroy$.complete();
+  }
 
-const createNewUser = (id: string): IUserData => {
-  const _name = NAMES[Math.round(Math.random() * (NAMES.length - 1))];
-  const name = `${_name} ${_name.charAt(0)}`;
-  const fruit = FRUITS[Math.round(Math.random() * (FRUITS.length - 1))];
-  const progress = Math.round(Math.random() * 100).toString();
+  private _subscribeListParam(): void {
+    this._coreService.listParam$
+      .pipe(
+        filter(value => !isEmpty(value)),
+        map(this._getUserList.bind(this)),
+        takeUntil(this._onDestroy$)
+      )
+      .subscribe();
+  }
 
-  return { id, name, progress, fruit };
+  private _getUserList(param: IList | null | undefined): Observable<null> {
+    this._userService.getUsers(param!)
+      .subscribe(({ data, meta: { total } }: IUserResponse) => {
+        this.users = data;
+        this.resultLength = total;
+      });
+    
+    return of(null);
+  }
+
 }

@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CanActivate, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 
+import { PREFIX_ROUTE } from 'src/app/helpers/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable({
@@ -25,7 +26,9 @@ export class PermissionGuard implements CanActivate {
         duration: 3000,
         panelClass: ['error-message']
       });
-      this._ngZone.run(() => this._router.navigate(['login']));
+      this._ngZone.run(() => 
+        this._router.navigate([`${PREFIX_ROUTE}/login`])
+      );
 
       return true;
     }
