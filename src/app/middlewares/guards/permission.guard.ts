@@ -27,7 +27,7 @@ export class PermissionGuard implements CanActivate {
         duration: 3000,
         panelClass: ['error-message']
       });
-      this._redirectToRoute(`${PREFIX_ROUTE}/${_route}`);
+      this._redirectToRoute(_route);
 
       return true;
     }
@@ -36,14 +36,14 @@ export class PermissionGuard implements CanActivate {
     const { role } = currentUser;
     
     if (role !== 'admin') {
-      this._redirectToRoute(`${PREFIX_ROUTE}/${_route}`);
+      this._redirectToRoute(_route);
     }
 
     return true;
   }
 
   private _redirectToRoute(route: string) {
-    this._ngZone.run(() => this._router.navigate([route]));
+    this._ngZone.run(() => this._router.navigate([`${PREFIX_ROUTE}/${route}`]));
   }
 
 }

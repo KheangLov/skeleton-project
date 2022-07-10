@@ -8,12 +8,13 @@ import { isEmpty } from 'lodash';
 
 import { ILogin, IUser } from 'src/app/types/user';
 import { environment } from 'src/environments/environment';
-import { httpHeaders, PREFIX_ROUTE } from '../helpers/core';
+import { httpHeaders } from '../helpers/core';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends BaseService {
 
   canRefreshToken$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
@@ -21,11 +22,13 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    private _router: Router,
-    private _alertBar: MatSnackBar,
-    private _ngZone: NgZone,
     private _googleAuthService: GoogleAuthService,
-  ) {}
+    router: Router,
+    alertBar: MatSnackBar,
+    ngZone: NgZone,
+  ) {
+    super(router, alertBar, ngZone);
+  }
 
   public get token() {
     return localStorage.getItem('access_token');
@@ -153,17 +156,4 @@ export class AuthService {
       );
   }
 
-  private _redirectTo(route: string) {
-    this._ngZone.run(() => 
-      this._router.navigate([`/${PREFIX_ROUTE}/${route}`])
-    );
-  }
-
-  private _alertMessage(
-    message: string, 
-    panelClass: Array<string> = [],
-    duration: number = 3000
-  ): void {
-    this._alertBar.open(message, 'Close', { duration, panelClass });
-  }
 }

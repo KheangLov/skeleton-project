@@ -1,25 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, join, map, omit, pick, toPairs } from 'lodash';
+import { Observable, filter as rxFilter, map as rxMap, catchError, of } from 'rxjs';
+import { filter, isEmpty, join, map, omit, toPairs } from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { httpHeaders, isEmptyValue } from '../helpers/core';
 import { IList, IUser, IUserResponse } from '../types/user';
+import { BaseService } from './base.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseService {
 
   private _apiUserUrl = `${environment.apiUrl}/users`;
 
   constructor(
     private _http: HttpClient,
-  ) { }
+    router: Router,
+    alertBar: MatSnackBar,
+    ngZone: NgZone,
+  ) {
+    super(router, alertBar, ngZone);
+  }
 
   create(data: any): Observable<any> {
-    return this._http.post(`${this._apiUserUrl}`, data, httpHeaders);
+    return this._http.post(this._apiUserUrl, data, httpHeaders)
+      .pipe(
+        rxFilter(data => !isEmpty(data)),
+        // rxMap(data => console.log(data)),
+        catchError(error => {
+          console.log(error);
+          return of(null);
+        }),
+      );
   }
 
   getList(param: IList): Observable<IUserResponse> {

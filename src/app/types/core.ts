@@ -62,3 +62,10 @@ export interface IErrorValidate {
   messages: Array<string>; 
   types: Array<string>;
 }
+
+export interface IDialogData {
+  action: string;
+  entity: string;
+  row: any;
+  component?: string;
+}
