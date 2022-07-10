@@ -20,6 +20,7 @@ import { AuthInterceptor } from './middlewares/interceptors/auth.interceptor';
 import { AdminV4Component } from './layouts/admin-v4/admin-v4.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GoogleAuthApiModule } from './modules/google-auth-api.module';
+import { PwaModule } from './modules/pwa.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { GoogleAuthApiModule } from './modules/google-auth-api.module';
     ComponentModule,
     LayoutModule,
     GoogleAuthApiModule,
+    PwaModule,
   ],
   providers: [
     {

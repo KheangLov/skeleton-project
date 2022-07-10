@@ -12,14 +12,12 @@ const gapiClientConfig: NgGapiClientConfig = {
   discoveryDocs: ["https://analyticsreporting.googleapis.com/$discovery/rest?version=v4"],
 };
 
-const modules = [
-  GoogleApiModule.forRoot({
-    provide: NG_GAPI_CONFIG,
-    useValue: gapiClientConfig
-  }),
-];
-
 @NgModule({
-  imports: modules
+  imports: [
+    GoogleApiModule.forRoot({
+      provide: NG_GAPI_CONFIG,
+      useValue: gapiClientConfig
+    }),
+  ]
 })
 export class GoogleAuthApiModule {}

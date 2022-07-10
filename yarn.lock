@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@abacritt/angularx-social-login@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@abacritt/angularx-social-login/-/angularx-social-login-1.2.1.tgz"
-  integrity sha512-z3VNRjjrThdY1lOlQLOxPqFlFc+Q+ajjtPAwA4sNLsUwlPArYrQtTTm5eRcceVHoZ8I1zhP40nhE9CnEGNboCA==
-  dependencies:
-    tslib "^2.3.1 || ^2.4.0"
-
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -132,10 +125,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/cdk@^14.0.4":
-  version "14.0.4"
-  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-14.0.4.tgz"
-  integrity sha512-zPM4VZadoKzTF9TZ7Yx5gJ7GtQpt62f8ofdH/BF2atG+TaNzOEFqtzogP4WuJDFAxJXOPMePobhth4YjUk0Wbw==
+"@angular/cdk@14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.0.0.tgz#4e83adea1ddcb61773e70f9f46aaa655f00c9852"
+  integrity sha512-9RnDlvskjXt1il9uWUidfHE98J9eYaVn+MCqhg0VLH1uHFcpt/dzoJ1nv71mC0anZHrClax29YMiEBnPFZaeFQ==
   dependencies:
     tslib "^2.3.0"
   optionalDependencies:
@@ -218,10 +211,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material@^14.0.4":
-  version "14.0.4"
-  resolved "https://registry.npmjs.org/@angular/material/-/material-14.0.4.tgz"
-  integrity sha512-Ysz6oPbpLH7CvRR6oxQwpUImSbFqxL4+eiH0LPc7vkaOSrvGdZ/7cWhAfT6hVnw3bEY+eq5qBSMgyVUB44z4eg==
+"@angular/material@14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-14.0.0.tgz#519d20bd22e14aa6a206b5086d38a9c9d36ef2ba"
+  integrity sha512-RNV1g7DbnlSI9rjsuqH+fO2e+IQCJEJmjBRGvx6dBYugiag4iR9ZnpHNued26UTJ+BPTemTA7a4cDzseKKB6NQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -232,10 +225,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-browser@^14.0.0":
-  version "14.0.4"
-  resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-14.0.4.tgz"
-  integrity sha512-VFeFpQ+248m8GiCqcsHwH4PET7tR1cyXnhsep1EeI4MDaO+aIbsUcESqXzMm5+ChOmNyiCtLQu8QvfHZK0uDVA==
+"@angular/platform-browser@14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-14.0.0.tgz#174c80c02c13a2e4bef22791e2d9d626d7f418d1"
+  integrity sha512-zijIhUxu3nJxoI3mTWxs1d7dh9ovldI09diumlm/rOhj/46j4SvGn8swJvWr0eo/QipkdP+i2Q1lAlpmRfI+tQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -243,6 +236,13 @@
   version "14.0.4"
   resolved "https://registry.npmjs.org/@angular/router/-/router-14.0.4.tgz"
   integrity sha512-aqtOjIjVNtWbpedDdni0yGfGR6sEb8S3jJB9jf43ththmHKxAlW7PKP2NgEmx0uJ2xY2iGET7Gkpl8RBwvoHgQ==
+  dependencies:
+    tslib "^2.3.0"
+
+"@angular/service-worker@14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-14.0.0.tgz#fb89cdcc0e06db7d4a3b08d180d2d537dfe6602d"
+  integrity sha512-b2C/HPPpBQ/AIRnI8e17QMGsEBuqYS4MZLCxukWPjMOeYkoppGTbVnCqfqaJFS8Rdx9z8sDS0HLqhgi6rIyzlQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -1529,19 +1529,14 @@
 
 "@types/gapi.auth2@^0.0.51":
   version "0.0.51"
-  resolved "https://registry.yarnpkg.com/@types/gapi.auth2/-/gapi.auth2-0.0.51.tgz#01410ccff41ec0eb744635d806557de9393c76a7"
+  resolved "https://registry.npmjs.org/@types/gapi.auth2/-/gapi.auth2-0.0.51.tgz"
   integrity sha512-j66GKDjxM01HLBpwFlii0E3Bsn7+dn1qabgosGSWhuM0/waHZ8ooT/T3M5U9mdx6BQ4sk+gzW1HDux00yZVWRw==
   dependencies:
     "@types/gapi" "*"
 
-"@types/gapi@*":
-  version "0.0.42"
-  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.42.tgz#772aa461660de09e7a78258064e075818373493c"
-  integrity sha512-kskWpouTGqutaIVRo/swiGnMVoRxOYdRwvaDrh0yavfR9vQoHvJJ7Enp4KE9MEGS8qF7F5KiP6bRNOYcCgRXCA==
-
-"@types/gapi@^0.0.39":
+"@types/gapi@*", "@types/gapi@^0.0.39":
   version "0.0.39"
-  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.39.tgz#bc7fa8cd0cb175b36e3609790fb2ed73a33f6881"
+  resolved "https://registry.npmjs.org/@types/gapi/-/gapi-0.0.39.tgz"
   integrity sha512-R1TZeZbvvbIC60DBJMhuOEivQHzOQtzl3uMDOOENTYQTSSDB6oEMpJo8HVPOTWivdUTbyEcB5qQOVr/JCKRlCQ==
 
 "@types/http-proxy@^1.17.8":
@@ -4354,7 +4349,7 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
 
 moment@^2.29.4:
   version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.0.0:
@@ -4411,7 +4406,7 @@ neo-async@^2.6.2:
 
 ng-gapi@^0.0.94:
   version "0.0.94"
-  resolved "https://registry.yarnpkg.com/ng-gapi/-/ng-gapi-0.0.94.tgz#6811b2f49bdbe5d2120a224437e01419752d7d93"
+  resolved "https://registry.npmjs.org/ng-gapi/-/ng-gapi-0.0.94.tgz"
   integrity sha512-GFRG3zr3DVnBmj0ecLMI3pE1BXyIF+5vvAE8l07TUGg/Yxh/BafiUoRGpCQJhSGow7os89UBta7Na+QbzB7KAw==
   dependencies:
     "@types/gapi" "^0.0.39"
@@ -6060,7 +6055,7 @@ tree-kill@1.2.2:
   resolved "https://registry.npmjs.org/tree-kill/-/tree-kill-1.2.2.tgz"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
-tslib@2.4.0, tslib@^2.1.0, tslib@^2.3.0, "tslib@^2.3.1 || ^2.4.0":
+tslib@2.4.0, tslib@^2.1.0, tslib@^2.3.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
