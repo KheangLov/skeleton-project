@@ -5,6 +5,7 @@
   background: #343434;
   
   .mat-tab-link {
-    height: 60px;
+    height: auto !important;
+    padding: 24px !important;
   }
 }

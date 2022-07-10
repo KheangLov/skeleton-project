@@ -8,6 +8,7 @@
     <a 
       *ngFor="let menu of menuList"
       mat-tab-link
+      class="d-block text-center"
       routerLinkActive
       #rla="routerLinkActive"
       [active]="rla.isActive"
