@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { isEmpty, upperCase } from 'lodash';
 import { Subject, takeUntil, filter, map, Observable, of, take, debounceTime, distinctUntilChanged, interval, debounce, timer } from 'rxjs';
+import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
 
 import { CoreService } from 'src/app/services/core.service';
 import { UserService } from 'src/app/services/user.service';
@@ -59,11 +61,20 @@ export class UserComponent implements OnDestroy {
     },
   ];
 
+  actions: Array<any> = [
+    {
+      text: 'Edit',
+      icon: '',
+      action: (row: any) => this.openDialog('update', row),
+    }
+  ];
+
   protected _onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _userService: UserService,
-    private _coreService: CoreService
+    private _coreService: CoreService,
+    private _dialog: MatDialog,
   ) {
     this._subscribeListParam();
   }
@@ -71,6 +82,21 @@ export class UserComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._onDestroy$.next();
     this._onDestroy$.complete();
+  }
+
+  openDialog(action: string, row: any = {}) {
+    const data = { 
+      action, 
+      row, 
+      originalform: this.users, 
+      entity: 'user' 
+    };
+    const _dialogRef = this._dialog.open(DialogComponent, { data });
+
+    _dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 
   private _subscribeListParam(): void {

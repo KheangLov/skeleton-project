@@ -26,6 +26,8 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() columns: Array<IColumn> = [];
 
+  @Input() actions: Array<any> = [];
+
   @Input() pageSizeOptions: Array<number> = [10, 25, 100];
 
   @Input() isLoadingResults = true;
@@ -37,7 +39,9 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(private _coreService: CoreService) {}
 
   ngOnInit(): void {
-    this.displayedColumns = map(this.columns, ({ columnDef }: any) => columnDef);
+    const _columns = map(this.columns, ({ columnDef }: any) => columnDef);
+
+    this.displayedColumns = [..._columns, 'action'];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
