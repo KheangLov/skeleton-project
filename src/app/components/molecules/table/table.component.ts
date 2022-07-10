@@ -28,11 +28,11 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() pageSizeOptions: Array<number> = [10, 25, 100];
 
+  @Input() isLoadingResults = true;
+  
   displayedColumns: Array<string> = [];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-
-  isLoadingResults = true;
 
   constructor(private _coreService: CoreService) {}
 
@@ -41,9 +41,8 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!isEmpty(changes['dataList']) && !isEmpty(this.dataList)) {
+    if (!isEmpty(changes['dataList']) || !isEmpty(changes['isLoadingResults'])) {
       this.dataSource = new MatTableDataSource(this.dataList);
-      this.isLoadingResults = false;
     }
   }
 
@@ -64,6 +63,10 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  trackByColumn(index: any) {
+    return index;
+  }
   
   private _sortAndPaginate() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
@@ -74,8 +77,6 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
         rxMap(this._loadParam.bind(this))
       )
       .subscribe();
-    
-    this.isLoadingResults = true;
   }
 
   private _loadParam(): Observable<any> {

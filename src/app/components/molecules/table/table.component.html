@@ -17,7 +17,10 @@
       [dataSource]="dataSource"
     >
 
-      <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+      <ng-container 
+        *ngFor="let column of columns; trackBy: trackByColumn"
+        [matColumnDef]="column.columnDef"
+      >
         <th 
           mat-header-cell 
           mat-sort-header
