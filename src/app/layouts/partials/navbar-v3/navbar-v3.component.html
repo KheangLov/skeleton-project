@@ -3,7 +3,12 @@
     <div class="d-flex justify-content-between">
       <span class="text-uppercase mx-3">Clock-IN</span>
       <div>
-        <button mat-button class="p-0" [matMenuTriggerFor]="beforeMenu">
+        <button 
+          mat-button
+          type="button"
+          class="p-0" 
+          [matMenuTriggerFor]="beforeMenu"
+        >
           <mat-icon>person outline icon</mat-icon>
         </button>
         <mat-menu #beforeMenu="matMenu" xPosition="before">
