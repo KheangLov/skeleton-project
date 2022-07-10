@@ -21,6 +21,10 @@ import { AdminV4Component } from './layouts/admin-v4/admin-v4.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GoogleAuthApiModule } from './modules/google-auth-api.module';
 import { PwaModule } from './modules/pwa.module';
+import { UserEditComponent } from './pages/admin/user/user-edit/user-edit.component';
+import { UserCreateComponent } from './pages/admin/user/user-create/user-create.component';
+import { AttendanceComponent } from './pages/admin/attendance/attendance.component';
+import { ClockInComponent } from './pages/admin/clock-in/clock-in.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { PwaModule } from './modules/pwa.module';
     DashboardV3Component,
     AdminV4Component,
     NotFoundComponent,
+    UserEditComponent,
+    UserCreateComponent,
+    AttendanceComponent,
+    ClockInComponent,
   ],
   imports: [
     BrowserModule,

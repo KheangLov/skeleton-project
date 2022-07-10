@@ -1,4 +1,6 @@
 import { HttpHeaders } from "@angular/common/http";
+import * as moment from "moment";
+
 import { IList } from "../types/user";
 
 export const httpHeaders = {
@@ -19,3 +21,7 @@ export const PREFIX_ROUTE = 'admin';
 
 export const isEmptyValue = (value: any, condition: any) => 
   [undefined, null, ''].includes(value) ? condition : value;
+
+export const formatUTCToLocal = (date: Date) => {
+  return moment.utc(date).local().format('YYYY-MM-DD HH:mm:ss');
+};

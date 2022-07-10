@@ -1,9 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { getFieldErrorMessage } from 'src/app/helpers/validation';
-import { HTML_INPUT_TYPE, IAttribute, MATERIAL_INPUT_APPERANCE } from 'src/app/types/core';
+import { 
+  HTML_INPUT_TYPE, 
+  IAttribute, 
+  IFormgroupModified, 
+  MATERIAL_INPUT_APPERANCE, 
+} from 'src/app/types/core';
 
 @Component({
   selector: 'app-input',
@@ -20,7 +25,10 @@ export class InputComponent implements OnChanges {
 
   @Input() placeholder: string = '';
 
-  @Input() formGroup: FormGroup = new FormGroup({});
+  @Input() formGroup: IFormgroupModified = {
+    modifiedAt: new Date(),
+    value: new FormGroup({}),
+  };
 
   @Input() appearance: MATERIAL_INPUT_APPERANCE = 'outline';
 
@@ -30,10 +38,8 @@ export class InputComponent implements OnChanges {
 
   error: string = '';
 
-  constructor() { }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (!_.isEmpty(changes['formGroup'])) {
+    if (!isEmpty(changes['formGroup'])) {
       const { name } = this;
       const _formControl: any = this.formControl;
 
@@ -42,7 +48,7 @@ export class InputComponent implements OnChanges {
   }
 
   get formControl() {
-    return this.formGroup.controls;
+    return this.formGroup.value.controls;
   }
 
 }

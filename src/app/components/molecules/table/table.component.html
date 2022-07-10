@@ -3,7 +3,7 @@
   <input #input matInput placeholder="Search..." (keyup)="applyFilter($event)">
 </mat-form-field>
 
-<div class="mat-container mat-elevation-z8">
+<div class="mat-container">
   <div class="loading-shade p-5" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults">
     </mat-spinner>
@@ -33,7 +33,7 @@
         <td 
           mat-cell 
           *matCellDef="let row" 
-          class="px-3"
+          class="text-truncate px-3"
           [hidden]="column.isHidden" 
         >
           {{ column.cell(row) }}
@@ -41,16 +41,16 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef class="px-2">Action</th>
-        <td mat-cell *matCellDef="let row" class="px-2">
+        <th mat-header-cell *matHeaderCellDef class="text-truncate px-2">Action</th>
+        <td mat-cell *matCellDef="let row" class="text-truncate px-2">
           <button
             *ngFor="let action of actions"
             mat-icon-button
             type="button"
+            [matTooltip]="action.text"
             (click)="action.action(row)"
           >
             <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
-            {{ action.text }}
           </button>
         </td>
       </ng-container>

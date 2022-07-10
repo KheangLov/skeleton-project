@@ -4,9 +4,17 @@
 
 <main class="main-content">
   <div class="container my-4">
-    <!-- <app-breadcrumb
-      [items]="breadcrumbList"
-    ></app-breadcrumb> -->
+    <button
+      *ngIf="slug"
+      mat-raised-button
+      type="button"
+      class="mb-3 py-1 text-capitalize d-flex justify-content-between align-items-center"
+    >
+      <mat-icon>add</mat-icon>
+      <span>
+        Add {{ slug }}
+      </span>
+    </button>
     <mat-card>
       <ng-content></ng-content>
     </mat-card>

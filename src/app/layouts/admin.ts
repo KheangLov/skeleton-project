@@ -16,7 +16,12 @@ export class Admin {
       text: 'User',
       link: `/${PREFIX_ROUTE}/user`,
       icon: 'person icon',
-    }
+    },
+    {
+      text: 'Attendance',
+      link: `/${PREFIX_ROUTE}/attendance`,
+      icon: 'fact_check',
+    },
   ];
 
   rightMenuList: Array<IMenu> = [

@@ -20,26 +20,30 @@ export class PermissionGuard implements CanActivate {
 
   canActivate() {
     const { currentUser, isLoggedIn } = this._authService;
-  
+    let _route = 'login';
+
     if (!isLoggedIn || isEmpty(currentUser)) {
       this._alertBar.open('Session timeout!', 'Close', {
         duration: 3000,
         panelClass: ['error-message']
       });
-      this._ngZone.run(() => 
-        this._router.navigate([`${PREFIX_ROUTE}/login`])
-      );
+      this._redirectToRoute(`${PREFIX_ROUTE}/${_route}`);
 
       return true;
     }
 
-    // const { role } = currentUser;
-
-    // if (role !== 'admin') {
-    //   this._ngZone.run(() => this._router.navigate([_route]));
-    // }
+    _route = 'clock-in';
+    const { role } = currentUser;
+    
+    if (role !== 'admin') {
+      this._redirectToRoute(`${PREFIX_ROUTE}/${_route}`);
+    }
 
     return true;
+  }
+
+  private _redirectToRoute(route: string) {
+    this._ngZone.run(() => this._router.navigate([route]));
   }
 
 }

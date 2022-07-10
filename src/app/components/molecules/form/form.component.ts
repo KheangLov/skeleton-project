@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { IFormgroupModified } from 'src/app/types/core';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -9,7 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class FormComponent {
   
-  @Input() formData: FormGroup = new FormGroup({});
+  @Input() formData: IFormgroupModified = {
+    modifiedAt: new Date(),
+    value: new FormGroup({}),
+  };
 
   @Output() formSubmitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
@@ -19,7 +24,7 @@ export class FormComponent {
     event.preventDefault();
     event.stopPropagation();
 
-    if(!this.formData.valid) {
+    if(!this.formData.value.valid) {
       this._alertBar.open('Invalid data!', 'Close', {
         duration: 3000,
         panelClass: ['error-message']
@@ -27,7 +32,7 @@ export class FormComponent {
       return;
     }
 
-    this.formSubmitted.emit(this.formData.value);
+    this.formSubmitted.emit(this.formData.value.value);
   }
 
 }

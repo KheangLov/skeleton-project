@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { map } from 'lodash';
 
 import { environment } from 'src/environments/environment';
@@ -42,4 +43,22 @@ export interface IColumn {
   header: string;
   isHidden: boolean;
   cell: Function;
+}
+
+export interface IAction {
+  text: string;
+  icon: string;
+  action: Function;
+}
+
+export interface IFormgroupModified {
+  modifiedAt: Date;
+  value: FormGroup;
+}
+
+export interface IErrorValidate { 
+  field: string; 
+  location: string; 
+  messages: Array<string>; 
+  types: Array<string>;
 }

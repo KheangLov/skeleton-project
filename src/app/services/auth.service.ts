@@ -144,7 +144,7 @@ export class AuthService {
         }),
         catchError(({ error: { message, errors } }) => {
           if (!isEmpty(message)) {
-            this._alertMessage(message);
+            this._alertMessage(message, ['error-message']);
           }
 
           return of(errors);

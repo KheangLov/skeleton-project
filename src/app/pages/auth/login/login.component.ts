@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { forEach, keys } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
 
 @Component({
   selector: 'app-login',
@@ -10,23 +13,59 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent {
 
-  loginForm: FormGroup = this._loginFormBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-  });
+  loginForm: IFormgroupModified = {
+    modifiedAt: new Date(),
+    value: new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    }),
+  };
+
+  protected _onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _authService: AuthService,
-    private _loginFormBuilder: FormBuilder,
-  ) { }
+  ) {
+    this._subscribeFormValueChanged();
+  }
+
+  ngOnDestroy(): void {
+    this._onDestroy$.next();
+    this._onDestroy$.complete();
+  }
 
   onLoginSubmit(formData: any) {
     this._authService.login(formData)
-      .subscribe(res => console.log(res));
+      .subscribe(errors => {
+        forEach(errors, ({ field, messages }: IErrorValidate) => {
+          this.loginForm.value
+            .controls[field]
+            .setErrors({
+              server: messages[0]
+            });
+
+          this._setLoginFormData(this.loginForm.value);
+        });
+      });
   }
 
   loginViaGoogle(): void {
     this._authService.loginViaGoogle().subscribe();
+  }
+
+  private _subscribeFormValueChanged() {
+    this.loginForm.value.valueChanges
+      .pipe(
+        takeUntil(this._onDestroy$)
+      )
+      .subscribe(() => this._setLoginFormData(this.loginForm.value));
+  }
+
+  private _setLoginFormData(value: FormGroup) {
+    this.loginForm = {
+      modifiedAt: new Date(),
+      value,
+    };
   }
 
 }

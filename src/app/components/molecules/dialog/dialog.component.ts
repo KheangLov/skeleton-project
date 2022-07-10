@@ -10,7 +10,7 @@ export class DialogComponent {
 
   hide = true;
 
-  action: string = 'create';
+  action: string = '';
 
   entity: string = '';
 

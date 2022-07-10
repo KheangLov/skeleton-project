@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { isEmpty, upperCase } from 'lodash';
 import { Subject, takeUntil, filter, map, Observable, of, take, debounceTime, distinctUntilChanged, interval, debounce, timer } from 'rxjs';
 import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
+import { formatUTCToLocal } from 'src/app/helpers/core';
 
 import { CoreService } from 'src/app/services/core.service';
 import { UserService } from 'src/app/services/user.service';
-import { IColumn } from 'src/app/types/core';
+import { IAction, IColumn } from 'src/app/types/core';
 import { IList, IUser, IUserResponse } from 'src/app/types/user';
 
 @Component({
@@ -27,46 +28,51 @@ export class UserComponent implements OnDestroy {
       columnDef: 'id',
       header: 'ID',
       isHidden: true,
-      cell: (element: IUser) => element.id,
+      cell: ({ id }: IUser) => id,
     },
     {
       columnDef: 'name',
       header: 'Name',
       isHidden: false,
-      cell: (element: IUser) => element.name,
+      cell: ({ name }: IUser) => name,
     },
     {
       columnDef: 'email',
       header: 'Email',
       isHidden: false,
-      cell: (element: IUser) => element.email,
+      cell: ({ email }: IUser) => email,
     },
     {
       columnDef: 'role',
       header: 'Role',
       isHidden: false,
-      cell: (element: IUser) => upperCase(element.role),
+      cell: ({ role }: IUser) => upperCase(role),
     },
     {
       columnDef: 'createdAt',
       header: 'Created At',
       isHidden: false,
-      cell: (element: IUser) => element.createdAt,
+      cell: ({ createdAt }: IUser) => formatUTCToLocal(createdAt),
     },
     {
       columnDef: 'updatedAt',
       header: 'Updated At',
       isHidden: false,
-      cell: (element: IUser) => element.updatedAt,
+      cell: ({ updatedAt }: IUser) => formatUTCToLocal(updatedAt),
     },
   ];
 
-  actions: Array<any> = [
+  actions: Array<IAction> = [
     {
       text: 'Edit',
-      icon: '',
-      action: (row: any) => this.openDialog('update', row),
-    }
+      icon: 'edit',
+      action: (row: IUser) => this.editUser('update', row),
+    },
+    {
+      text: 'Delete',
+      icon: 'delete',
+      action: (row: IUser) => this.deleteUser(row),
+    },
   ];
 
   protected _onDestroy$: Subject<void> = new Subject<void>();
@@ -84,7 +90,7 @@ export class UserComponent implements OnDestroy {
     this._onDestroy$.complete();
   }
 
-  openDialog(action: string, row: any = {}) {
+  editUser(action: string, row: any = {}) {
     const data = { 
       action, 
       row, 
@@ -97,6 +103,11 @@ export class UserComponent implements OnDestroy {
       .subscribe(result => {
         console.log(result);
       });
+  }
+
+  deleteUser(user: IUser) {
+    this._userService.delete(user)
+      .subscribe(result => console.log(result));
   }
 
   private _subscribeListParam(): void {
@@ -112,7 +123,7 @@ export class UserComponent implements OnDestroy {
 
   private _getUserList(param: IList | null | undefined): Observable<null> {
     this.isLoadingResults = true;
-    this._userService.getUsers(param!)
+    this._userService.getList(param!)
       .pipe(
         filter(value => !isEmpty(value))
       )

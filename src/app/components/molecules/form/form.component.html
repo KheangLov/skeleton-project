@@ -1,3 +1,6 @@
-<form [formGroup]="formData" (ngSubmit)="submit($event)">
+<form 
+  [formGroup]="formData.value" 
+  (ngSubmit)="submit($event)"
+>
   <ng-content></ng-content>
 </form>
