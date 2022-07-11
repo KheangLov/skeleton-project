@@ -12,6 +12,11 @@ export interface IAttribute {
   value: any;
 }
 
+export interface IOption {
+  text: string;
+  value: any;
+}
+
 export type HTML_INPUT_TYPE = 'number' | 'search' | 'button' | 'time' | 'image' | 'text' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'month' | 'password' | 'radio' | 'range';
 
 export type HTML_BUTTON_TYPE = 'submit' | 'reset' | 'button';

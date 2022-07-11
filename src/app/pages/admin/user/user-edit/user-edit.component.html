@@ -23,6 +23,13 @@
           name="email"
           [formGroup]="editInfoForm"
         ></app-input>
+        <app-select
+          appearance="standard"
+          label="Role"
+          name="role"
+          [formGroup]="editInfoForm"
+          [options]="options"
+        ></app-select>
         <button
           mat-raised-button
           type="submit"

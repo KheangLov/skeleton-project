@@ -25,6 +25,7 @@ import { UserEditComponent } from './pages/admin/user/user-edit/user-edit.compon
 import { UserCreateComponent } from './pages/admin/user/user-create/user-create.component';
 import { AttendanceComponent } from './pages/admin/attendance/attendance.component';
 import { ClockInComponent } from './pages/admin/clock-in/clock-in.component';
+import { ProfileComponent } from './pages/admin/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ClockInComponent } from './pages/admin/clock-in/clock-in.component';
     UserCreateComponent,
     AttendanceComponent,
     ClockInComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

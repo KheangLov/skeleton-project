@@ -30,6 +30,13 @@
     name="password_confirmation"
     [formGroup]="createForm"
   ></app-input>
+  <app-select
+    appearance="standard"
+    label="Role"
+    name="role"
+    [formGroup]="createForm"
+    [options]="options"
+  ></app-select>
   <button
     mat-raised-button
     type="submit"

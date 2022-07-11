@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AttendanceService } from 'src/app/services/attendance.service';
 
 @Component({
   selector: 'app-clock-in',
@@ -8,10 +8,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ClockInComponent {
 
-  constructor(private _authService: AuthService) { }
+  constructor(
+    private _attendanceService: AttendanceService
+  ) { }
 
-  logout() {
-    this._authService.doLogout();
+  clockIn() {
+    this._attendanceService.clockIn()
+      .subscribe(data => console.log(data));
   }
 
 }

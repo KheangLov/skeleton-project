@@ -1,3 +1,5 @@
+import { IOption } from "./core";
+
 export interface IUser {
   id: number;
   name: string;
@@ -30,3 +32,14 @@ export interface IList {
   perPage: number;
   search?: string;
 }
+
+export const USER_ROLE_OPTIONS: Array<IOption> = [
+  {
+    text: 'Admin',
+    value: 'admin',
+  },
+  {
+    text: 'User',
+    value: 'user',
+  },
+];

@@ -1,5 +1,15 @@
-<div class="container">
-  <div class="d-flex align-items-center justify-content-center vh-100 px-5 mx-md-5">
-    <ng-content></ng-content>
+<app-navbar-v3
+  [menuList]="menuList"
+></app-navbar-v3>
+
+<main class="main-content">
+  <div class="container my-4 h-100">
+    <div class="d-flex align-items-center justify-content-center">
+      <ng-content></ng-content>
+    </div>
   </div>
-</div>
+</main>
+
+<app-bottombar
+  [menuList]="sidebarMenuList"
+></app-bottombar>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { last } from 'lodash';
 import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
+import { PREFIX_ROUTE } from 'src/app/helpers/core';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
@@ -22,7 +23,7 @@ export class AdminComponent extends Admin {
     {
       text: this._authService.currentUser.name,
       icon: 'person',
-      action: () => console.log('Profile'),
+      action: () => this._router.navigate([`${PREFIX_ROUTE}/profile`]),
     },
     {
       text: 'Logout',
@@ -33,6 +34,7 @@ export class AdminComponent extends Admin {
 
   constructor(
     private _route: ActivatedRoute,
+    private _router: Router,
     private _dialog: MatDialog,
     private _coreService: CoreService,
     authService: AuthService,

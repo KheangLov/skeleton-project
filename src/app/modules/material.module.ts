@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 
 const components = [
   MatCommonModule,
@@ -43,6 +44,7 @@ const components = [
   MatPaginatorModule,
   MatSortModule,
   MatTabsModule,
+  MatSelectModule,
 ];
 
 @NgModule({

@@ -7,7 +7,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
 import { passwordMatchingValidatior } from 'src/app/helpers/validation';
 import { UserService } from 'src/app/services/user.service';
-import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
+import { IErrorValidate, IFormgroupModified, IOption } from 'src/app/types/core';
+import { USER_ROLE_OPTIONS } from 'src/app/types/user';
 
 @Component({
   selector: 'app-user-edit',
@@ -16,6 +17,8 @@ import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
 })
 export class UserEditComponent implements OnDestroy {
 
+  options: Array<IOption> = USER_ROLE_OPTIONS;
+  
   contentData: any = null;
 
   editInfoForm: IFormgroupModified = {
@@ -23,6 +26,7 @@ export class UserEditComponent implements OnDestroy {
     value: new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      role: new FormControl('', [Validators.required]),
     }),
   };
 
@@ -70,7 +74,7 @@ export class UserEditComponent implements OnDestroy {
 
   onSubmitPassword(formData: any) {
     formData.id = this.contentData.id;
-    
+
     this._userService.changePassword(formData)
       .subscribe(
         data => this._dialogRef.close({ data }),

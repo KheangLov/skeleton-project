@@ -7,7 +7,8 @@ import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.comp
 
 import { passwordMatchingValidatior } from 'src/app/helpers/validation';
 import { UserService } from 'src/app/services/user.service';
-import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
+import { IErrorValidate, IFormgroupModified, IOption } from 'src/app/types/core';
+import { USER_ROLE_OPTIONS } from 'src/app/types/user';
 
 @Component({
   selector: 'app-user-create',
@@ -16,11 +17,14 @@ import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
 })
 export class UserCreateComponent implements OnDestroy {
 
+  options: Array<IOption> = USER_ROLE_OPTIONS;
+
   createForm: IFormgroupModified = {
     modifiedAt: new Date(),
     value: new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      role: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       password_confirmation: new FormControl('', [Validators.required, Validators.minLength(6)]),
     }, passwordMatchingValidatior),

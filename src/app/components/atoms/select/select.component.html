@@ -1,0 +1,24 @@
+<mat-form-field
+  appDynamicAttr
+  [appearance]="appearance"
+  [attributeList]="wrapperAttributes"
+  [formGroup]="formGroup.value"
+>
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    appDynamicAttr
+    [attributeList]="attributes"
+    [formControlName]="name"
+    [attr.name]="name"
+  >
+    <mat-option
+      *ngFor="let option of options"
+      [value]="option.value"
+    >
+      {{ option.text }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="error">
+    {{ error }}
+  </mat-error>
+</mat-form-field>

@@ -108,7 +108,7 @@ export class UserComponent implements OnDestroy {
         {
           type: 'form',
           variable: 'editInfoForm',
-          keys: ['name', 'email']
+          keys: ['name', 'email', 'role']
         },
       ],
     };

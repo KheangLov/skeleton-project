@@ -22,6 +22,11 @@ export class Admin {
       link: `/${PREFIX_ROUTE}/attendance`,
       icon: 'fact_check',
     },
+    {
+      text: 'Profile',
+      link: `/${PREFIX_ROUTE}/profile`,
+      icon: 'person_outline',
+    },
   ];
 
   rightMenuList: Array<IMenu> = [
