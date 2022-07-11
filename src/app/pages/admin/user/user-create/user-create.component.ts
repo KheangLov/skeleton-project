@@ -1,10 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { forEach, omit } from 'lodash';
 import { Subject, takeUntil } from 'rxjs';
 
 import { passwordMatchingValidatior } from 'src/app/helpers/validation';
 import { UserService } from 'src/app/services/user.service';
-import { IFormgroupModified } from 'src/app/types/core';
+import { IErrorValidate, IFormgroupModified } from 'src/app/types/core';
 
 @Component({
   selector: 'app-user-create',
@@ -18,8 +19,8 @@ export class UserCreateComponent implements OnDestroy {
     value: new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      password_confirmation: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password_confirmation: new FormControl('', [Validators.required, Validators.minLength(4)]),
     }, passwordMatchingValidatior),
   };
 
@@ -35,8 +36,21 @@ export class UserCreateComponent implements OnDestroy {
   }
 
   onSubmit(formData: any) {
-    this._userService.create(formData)
-      .subscribe(data => console.log(data));
+    const _formData = omit(formData, ['password_confirmation']);
+    this._userService.create(_formData)
+      .subscribe(
+        data => console.log(data),
+        errors =>
+          forEach(errors, ({ field, messages }: IErrorValidate) => {
+            this.createForm.value
+              .controls[field]
+              .setErrors({
+                server: messages[0]
+              });
+
+            this._setCreateFormData(this.createForm.value);
+          })
+      );
   }
 
   private _subscribeFormValueChanged() {

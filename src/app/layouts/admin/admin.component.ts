@@ -19,7 +19,7 @@ export class AdminComponent extends Admin {
 
   menuList: Array<IMenu> = [
     {
-      text: 'Profile',
+      text: this._authService.currentUser.name,
       icon: 'person',
       action: () => console.log('Profile'),
     },

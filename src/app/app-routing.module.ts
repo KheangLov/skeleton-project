@@ -14,6 +14,7 @@ import { PREFIX_ROUTE } from './helpers/core';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AttendanceComponent } from './pages/admin/attendance/attendance.component';
 import { ClockInComponent } from './pages/admin/clock-in/clock-in.component';
+import { UserGuard } from './middlewares/guards/user.guard';
 
 const redirectToLogin = `/${PREFIX_ROUTE}/login`;
 
@@ -54,7 +55,7 @@ const routes: Routes = [
       {
         path: 'clock-in',
         component: ClockInComponent,
-        canActivate: [PermissionGuard],
+        canActivate: [UserGuard],
       },
       {
         path: 'v2',

@@ -63,6 +63,12 @@ export interface IErrorValidate {
   types: Array<string>;
 }
 
+export interface ISuccessResponse {
+  data: any;
+  success: boolean;
+  message: string;
+}
+
 export interface IDialogData {
   action: string;
   entity: string;

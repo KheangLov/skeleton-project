@@ -1,14 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, filter as rxFilter, map as rxMap, catchError, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Observable, filter as rxFilter, map as rxMap, catchError, throwError, of } from 'rxjs';
 import { filter, isEmpty, join, map, omit, toPairs } from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { httpHeaders, isEmptyValue } from '../helpers/core';
 import { IList, IUser, IUserResponse } from '../types/user';
 import { BaseService } from './base.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ISuccessResponse } from '../types/core';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,18 @@ export class UserService extends BaseService {
   create(data: any): Observable<any> {
     return this._http.post(this._apiUserUrl, data, httpHeaders)
       .pipe(
-        rxFilter(data => !isEmpty(data)),
-        // rxMap(data => console.log(data)),
-        catchError(error => {
-          console.log(error);
-          return of(null);
+        rxFilter((data: any) => !isEmpty(data)),
+        rxMap(({ message, success, data }: ISuccessResponse) => {
+          if (success) {
+            this._alertMessage(message);
+          }
+
+          return data;
+        }),
+        catchError(({ error: { message, errors } }) => {
+          this._alertMessage(message, ['error-message']);
+
+          return throwError(errors);
         }),
       );
   }
@@ -49,7 +57,15 @@ export class UserService extends BaseService {
   }
 
   delete({ id }: IUser): Observable<any> {
-    return this._http.delete(`${this._apiUserUrl}/${id}`, httpHeaders);
+    return this._http.delete(`${this._apiUserUrl}/${id}`, httpHeaders)
+      .pipe(
+        rxFilter(data => !isEmpty(data)),
+        catchError(({ error: { message }}) => {
+          this._alertMessage(message, ['error-message']);
+
+          return of(null);
+        })
+      );
   }
 
   changePassword(data: any): Observable<any> {

@@ -20,7 +20,7 @@
           <a
             *ngFor="let menu of menuList"
             mat-menu-item
-            class="text-center px-4"
+            class="text-center px-4 d-flex align-items-center"
             [routerLink]="menu.link"
             (click)="menu.action && menu.action()"
           >

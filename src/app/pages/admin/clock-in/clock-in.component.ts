@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-clock-in',
   templateUrl: './clock-in.component.html',
   styleUrls: ['./clock-in.component.scss']
 })
-export class ClockInComponent implements OnInit {
+export class ClockInComponent {
 
-  constructor() { }
+  constructor(private _authService: AuthService) { }
 
-  ngOnInit(): void {
+  logout() {
+    this._authService.doLogout();
   }
 
 }
