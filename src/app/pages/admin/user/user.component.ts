@@ -1,10 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { isEmpty, upperCase } from 'lodash';
-import { Subject, takeUntil, filter, map, Observable, of, take, debounceTime, distinctUntilChanged, interval, debounce, timer } from 'rxjs';
-import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
-import { formatUTCToLocal } from 'src/app/helpers/core';
+import { filter as ldFilter, isEmpty, remove, upperCase } from 'lodash';
+import { Subject, takeUntil, filter, map, Observable, of, mergeMap } from 'rxjs';
+import { ConfirmDialogComponent } from 'src/app/components/molecules/confirm-dialog/confirm-dialog.component';
 
+import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
+import { formatUTCToLocal, isEmptyValue } from 'src/app/helpers/core';
 import { CoreService } from 'src/app/services/core.service';
 import { UserService } from 'src/app/services/user.service';
 import { IAction, IColumn } from 'src/app/types/core';
@@ -66,7 +67,7 @@ export class UserComponent implements OnDestroy {
     {
       text: 'Edit',
       icon: 'edit',
-      action: (row: IUser) => this.editUser('update', row),
+      action: (row: IUser) => this.editUser('edit', row),
     },
     {
       text: 'Delete',
@@ -83,6 +84,7 @@ export class UserComponent implements OnDestroy {
     private _dialog: MatDialog,
   ) {
     this._subscribeListParam();
+    this._subscribeUserData();
   }
 
   ngOnDestroy(): void {
@@ -91,29 +93,77 @@ export class UserComponent implements OnDestroy {
   }
 
   editUser(action: string, row: any = {}) {
+    const entity = 'user';
+    const component = `${entity}_edit`;
     const data = { 
       action, 
       row, 
-      originalform: this.users, 
-      entity: 'user' 
+      component,
+      entity,
+      initKeys: [
+        {
+          type: 'default',
+          variable: 'contentData',
+        },
+        {
+          type: 'form',
+          variable: 'editInfoForm',
+          keys: ['name', 'email']
+        },
+      ],
     };
     const _dialogRef = this._dialog.open(DialogComponent, { data });
 
     _dialogRef.afterClosed()
-      .subscribe(result => {
-        console.log(result);
+      .pipe(
+        filter(data => !isEmpty(data)),
+      )
+      .subscribe((result: any) => {
+        if (!isEmpty(result.data)) {
+          const { data } = result;
+          remove(this.users, ['id', data.id]);
+          this.users = [data, ...this.users];
+        }
       });
   }
 
   deleteUser(user: IUser) {
+    const data = {
+      title: 'Are you sure you want to delete this user?',
+      data: user
+    };
+    const _dialogRef = this._dialog.open(ConfirmDialogComponent, { data });
+
+    _dialogRef.afterClosed()
+      .pipe(
+        filter(data => !isEmpty(data)),
+        mergeMap(this._removeUser.bind(this))
+      )
+      .subscribe();
+  }
+
+  private _removeUser(user: IUser): Observable<any> {
     this._userService.delete(user)
-      .subscribe(result => console.log(result));
+      .subscribe(() => {
+        this.users = ldFilter(this.users, ({ id }: IUser) => id !== user.id);
+        this.resultLength -= 1;
+      });
+    
+    return of(null);
+  }
+
+  private _subscribeUserData(): void {
+    this._coreService.userData$
+      .pipe(
+        filter((value: any) => !isEmpty(value)),
+        takeUntil(this._onDestroy$)
+      )
+      .subscribe(value => this._appendUserToList(value));
   }
 
   private _subscribeListParam(): void {
     this._coreService.listParam$
       .pipe(
-        debounce(() => timer(1000)),
         filter(value => !isEmpty(value)),
         map(this._getUserList.bind(this)),
         takeUntil(this._onDestroy$)
@@ -134,6 +184,11 @@ export class UserComponent implements OnDestroy {
       });
     
     return of(null);
+  }
+
+  private _appendUserToList(user: IUser) {
+    this.users = [user, ...this.users];
+    this.resultLength += 1;
   }
 
 }

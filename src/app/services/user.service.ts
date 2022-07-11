@@ -53,13 +53,41 @@ export class UserService extends BaseService {
   }
 
   update(data: IUser): Observable<any> {
-    return this._http.patch(`${this._apiUserUrl}/${data.id}`, omit(data, ['id']), httpHeaders);
+    const _param = omit(data, ['id']);
+
+    return this._http.patch(
+      `${this._apiUserUrl}/${data.id}`, 
+      _param, 
+      httpHeaders
+    )
+      .pipe(
+        rxFilter((data: any) => !isEmpty(data)),
+        rxMap(({ message, success, data }: ISuccessResponse) => {
+          if (success) {
+            this._alertMessage(message);
+          }
+
+          return data;
+        }),
+        catchError(({ error: { message, errors } }) => {
+          this._alertMessage(message, ['error-message']);
+
+          return throwError(errors);
+        }),
+      );
   }
 
   delete({ id }: IUser): Observable<any> {
     return this._http.delete(`${this._apiUserUrl}/${id}`, httpHeaders)
       .pipe(
-        rxFilter(data => !isEmpty(data)),
+        rxFilter((data: any) => !isEmpty(data)),
+        rxMap(({ message, success }: ISuccessResponse) => {
+          if (success) {
+            this._alertMessage(message);
+          }
+
+          return of(null);
+        }),
         catchError(({ error: { message }}) => {
           this._alertMessage(message, ['error-message']);
 
@@ -69,7 +97,13 @@ export class UserService extends BaseService {
   }
 
   changePassword(data: any): Observable<any> {
-    return this._http.put(`${this._apiUserUrl}/change-password/${data.id}`, omit(data, ['id']), httpHeaders);
+    const _param = omit(data, ['id']);
+
+    return this._http.put(
+      `${this._apiUserUrl}/change-password/${data.id}`, 
+      _param, 
+      httpHeaders
+    );
   }
 
   private _queryStringParams(param: IList): string {

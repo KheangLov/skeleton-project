@@ -5,6 +5,7 @@ import { last } from 'lodash';
 import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { CoreService } from 'src/app/services/core.service';
 import { IMenu } from 'src/app/types/core';
 import { Admin } from '../admin';
 
@@ -33,6 +34,7 @@ export class AdminComponent extends Admin {
   constructor(
     private _route: ActivatedRoute,
     private _dialog: MatDialog,
+    private _coreService: CoreService,
     authService: AuthService,
   ) {
     super(authService);
@@ -52,9 +54,7 @@ export class AdminComponent extends Admin {
     const _dialogRef = this._dialog.open(DialogComponent, { data });
 
     _dialogRef.afterClosed()
-      .subscribe(result => {
-        console.log(result);
-      });
+      .subscribe(({ data }) => this._coreService.setUserList(data));
   }
 
   private _subcribeUrl(): void {

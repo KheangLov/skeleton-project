@@ -74,4 +74,5 @@ export interface IDialogData {
   entity: string;
   row: any;
   component?: string;
+  initKeys?: Array<string>;
 }

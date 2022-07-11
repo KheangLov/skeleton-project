@@ -36,6 +36,8 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 
+  timeout: any = null;
+
   constructor(private _coreService: CoreService) {}
 
   ngOnInit(): void {
@@ -58,10 +60,14 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   applyFilter(event: Event) {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
     const _filterValue = (event.target as HTMLInputElement).value;
     const _param = lowerCase(trim(_filterValue));
 
-    this._setParam(_param);
+    this.timeout = setTimeout(() => this._setParam(_param), 1000);
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
