@@ -106,6 +106,7 @@ export class ClockInComponent implements OnInit {
           clockIn: moment(d.clockIn).local().format('YYYY-MM-DD HH:mm:ss'),
           clockOut: !isEmpty(d.clockOut) ? moment(d.clockOut).local().format('YYYY-MM-DD HH:mm:ss') : null,
           clockedIn: moment(d.clockIn).local().format('YYYY-MM-DD'),
+          reason: `REASON: ${d.reason}`,
           workingHour: d.workingHour ? d.workingHour : null,
         }));
 

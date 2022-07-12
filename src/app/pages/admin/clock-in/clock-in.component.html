@@ -41,7 +41,11 @@
           <span class="fs-6 fw-bold text-white me-1">
             {{ group.clockedIn }}
           </span>
-          <span *ngIf="group.isLate" class="text-warning">
+          <span 
+            *ngIf="group.isLate" 
+            class="text-warning"
+            [matTooltip]="group.reason"
+          >
             (Late)
           </span>
         </div>
