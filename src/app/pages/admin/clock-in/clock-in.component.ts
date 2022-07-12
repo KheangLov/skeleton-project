@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { find, isEmpty, map } from 'lodash';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { AttendanceService } from 'src/app/services/attendance.service';
   templateUrl: './clock-in.component.html',
   styleUrls: ['./clock-in.component.scss']
 })
-export class ClockInComponent implements OnInit {
+export class ClockInComponent {
 
   groupedList: Array<any> = [];
 
@@ -30,10 +30,6 @@ export class ClockInComponent implements OnInit {
     private _changeDetectorRef: ChangeDetectorRef,
   ) {
     this._list();
-  }
-
-  ngOnInit(): void {
-    this.isLoaded = true;
   }
 
   clockIn() {
@@ -100,24 +96,32 @@ export class ClockInComponent implements OnInit {
       .pipe(
         filter((data: any) => !isEmpty(data.data))
       )
-      .subscribe(({ data, meta: { count } }) => {
-        this.groupedList = map(data, d => ({
-          ...d,
-          clockIn: moment(d.clockIn).local().format('YYYY-MM-DD HH:mm:ss'),
-          clockOut: !isEmpty(d.clockOut) ? moment(d.clockOut).local().format('YYYY-MM-DD HH:mm:ss') : null,
-          clockedIn: moment(d.clockIn).local().format('YYYY-MM-DD'),
-          reason: `REASON: ${d.reason}`,
-          workingHour: d.workingHour ? d.workingHour : null,
-        }));
-
-        const _find = find(this.groupedList, ['clockedIn', this.currentDate]);
-        if (!isEmpty(_find)) {
-          this.clockedIn = _find;
+      .subscribe(
+        ({ data, meta: { count } }: any) => {
+          if (!isEmpty(data)) {
+            this.groupedList = map(data, d => ({
+              ...d,
+              clockIn: moment(d.clockIn).local().format('YYYY-MM-DD HH:mm:ss'),
+              clockOut: !isEmpty(d.clockOut) ? moment(d.clockOut).local().format('YYYY-MM-DD HH:mm:ss') : null,
+              clockedIn: moment(d.clockIn).local().format('YYYY-MM-DD'),
+              reason: `REASON: ${d.reason}`,
+              workingHour: d.workingHour ? d.workingHour : null,
+            }));
+  
+            const _find = find(this.groupedList, ['clockedIn', this.currentDate]);
+            if (!isEmpty(_find)) {
+              this.clockedIn = _find;
+            }
+  
+            this.nextPage = count + 1;
+            this.isLoaded = true;
+          }
+        },
+        err => {
+          console.log(err);
+          this.isLoaded = true;
         }
-
-        this.nextPage = count + 1;
-        this.isLoaded = true;
-      });
+      );
   }
 
 }
