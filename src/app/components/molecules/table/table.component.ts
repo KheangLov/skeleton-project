@@ -32,6 +32,8 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() isLoadingResults = true;
 
+  @Input() title = '';
+
   loadingAttributes: Array<IAttribute> = [
     {
       name: 'class',
