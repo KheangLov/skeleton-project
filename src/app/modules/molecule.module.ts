@@ -8,6 +8,7 @@ import { TableComponent } from '../components/molecules/table/table.component';
 import { DialogComponent } from '../components/molecules/dialog/dialog.component';
 import { MaterialModule } from './material.module';
 import { ConfirmDialogComponent } from '../components/molecules/confirm-dialog/confirm-dialog.component';
+import { LoadingDirective } from '../directives/loading.directive';
 
 const components = [
   ConfirmDialogComponent,
@@ -18,7 +19,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: components,
+  declarations: [...components, LoadingDirective],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule],
   exports: components,
 })

@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CanActivate, Router } from '@angular/router';
-import { isEmpty } from 'lodash';
 
 import { PREFIX_ROUTE } from 'src/app/helpers/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,19 +8,24 @@ import { AuthService } from 'src/app/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionGuard implements CanActivate {
+export class LoggedGuard implements CanActivate {
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
+    private _alertBar: MatSnackBar,
     private _ngZone: NgZone,
   ) { }
 
   canActivate() {
-    const { role } = this._authService.currentUser;
-    
-    if (role !== 'admin') {
-      this._redirectToRoute('clock-in');
+    const { isLoggedIn } = this._authService;
+
+    if (!isLoggedIn) {
+      this._alertBar.open('Session timeout!', 'Close', {
+        duration: 3000,
+        panelClass: ['error-message']
+      });
+      this._redirectToRoute('login');
     }
 
     return true;

@@ -1,0 +1,19 @@
+<div [class.loading-shade]="isHasOverlay">
+  <mat-spinner
+    *ngIf="isSpinner; else elseBlock"
+    appDynamicAttr
+    mode="indeterminate"
+    [attributeList]="attributes"
+    [color]="color"
+  ></mat-spinner>
+
+  <ng-template #elseBlock>
+    <mat-progress-bar
+      appDynamicAttr
+      mode="indeterminate"
+      [attributeList]="attributes"
+      [color]="color"
+    >
+    </mat-progress-bar>
+  </ng-template>
+</div>

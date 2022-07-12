@@ -16,6 +16,7 @@ import { AttendanceComponent } from './pages/admin/attendance/attendance.compone
 import { ClockInComponent } from './pages/admin/clock-in/clock-in.component';
 import { UserGuard } from './middlewares/guards/user.guard';
 import { ProfileComponent } from './pages/admin/profile/profile.component';
+import { LoggedGuard } from './middlewares/guards/logged.guard';
 
 const redirectToLogin = `/${PREFIX_ROUTE}/login`;
 
@@ -41,27 +42,27 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [PermissionGuard],
+        canActivate: [LoggedGuard, PermissionGuard],
       },
       {
         path: 'user',
         component: UserComponent,
-        canActivate: [PermissionGuard],
+        canActivate: [LoggedGuard, PermissionGuard],
       },
       {
         path: 'attendance',
         component: AttendanceComponent,
-        canActivate: [PermissionGuard],
+        canActivate: [LoggedGuard, PermissionGuard],
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        canActivate: [PermissionGuard],
+        canActivate: [LoggedGuard],
       },
       {
         path: 'clock-in',
         component: ClockInComponent,
-        canActivate: [UserGuard],
+        canActivate: [LoggedGuard, UserGuard],
       },
       {
         path: 'v2',
@@ -69,12 +70,12 @@ const routes: Routes = [
           {
             path: 'dashboard',
             component: DashboardV2Component,
-            canActivate: [PermissionGuard],
+            canActivate: [LoggedGuard, PermissionGuard],
           },
           {
             path: 'user',
             component: UserV2Component,
-            canActivate: [PermissionGuard],
+            canActivate: [LoggedGuard, PermissionGuard],
           },
         ]
       },
@@ -84,12 +85,12 @@ const routes: Routes = [
           {
             path: 'dashboard',
             component: DashboardV3Component,
-            canActivate: [PermissionGuard],
+            canActivate: [LoggedGuard, PermissionGuard],
           },
           {
             path: 'user',
             component: UserV3Component,
-            canActivate: [PermissionGuard],
+            canActivate: [LoggedGuard, PermissionGuard],
           },
         ]
       },

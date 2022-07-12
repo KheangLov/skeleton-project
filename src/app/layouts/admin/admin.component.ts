@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { last } from 'lodash';
-import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
-import { PREFIX_ROUTE } from 'src/app/helpers/core';
+import { filter, isEmpty, last } from 'lodash';
 
+import { DialogComponent } from 'src/app/components/molecules/dialog/dialog.component';
+import { isEmptyValue, PREFIX_ROUTE } from 'src/app/helpers/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { CoreService } from 'src/app/services/core.service';
 import { IMenu } from 'src/app/types/core';
@@ -56,7 +56,7 @@ export class AdminComponent extends Admin {
     const _dialogRef = this._dialog.open(DialogComponent, { data });
 
     _dialogRef.afterClosed()
-      .subscribe(({ data }) => this._coreService.setUserList(data));
+      .subscribe(({ data }: any) => isEmptyValue(data, false) && this._coreService.setUserList(data));
   }
 
   private _subcribeUrl(): void {

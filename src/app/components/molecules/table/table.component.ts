@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { merge, startWith, map as rxMap, Observable, of } from 'rxjs';
 import { isEmpty, lowerCase, map, trim } from 'lodash';
 
-import { IColumn } from 'src/app/types/core';
+import { IAttribute, IColumn } from 'src/app/types/core';
 import { CoreService } from 'src/app/services/core.service';
 import { IList } from 'src/app/types/user';
 
@@ -31,6 +31,13 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() pageSizeOptions: Array<number> = [10, 25, 100];
 
   @Input() isLoadingResults = true;
+
+  loadingAttributes: Array<IAttribute> = [
+    {
+      name: 'class',
+      value: 'w-100 position-absolute top-0',
+    }
+  ];
   
   displayedColumns: Array<string> = [];
 
