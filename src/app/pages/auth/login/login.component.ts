@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { forEach, keys } from 'lodash';
+import { forEach, isEmpty, keys } from 'lodash';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -38,13 +38,15 @@ export class LoginComponent {
     this._authService.login(formData)
       .subscribe(errors => {
         forEach(errors, ({ field, messages }: IErrorValidate) => {
-          this.loginForm.value
-            .controls[field]
-            .setErrors({
-              server: messages[0]
-            });
+          if (!isEmpty(this.loginForm.value.controls[field])) {
+            this.loginForm.value
+              .controls[field]
+              .setErrors({
+                server: messages[0]
+              });
 
-          this._setLoginFormData(this.loginForm.value);
+            this._setLoginFormData(this.loginForm.value);
+          }
         });
       });
   }

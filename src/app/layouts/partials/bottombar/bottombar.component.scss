@@ -7,5 +7,9 @@
   .mat-tab-link {
     height: auto !important;
     padding: 10px 24px;
+
+    &.mat-tab-label-active {
+      color: #0a58ca !important;
+    }
   }
 }

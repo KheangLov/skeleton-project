@@ -1,13 +1,71 @@
 <app-blank>
-  <button
-    mat-raised-button
-    type="button"
-    class="text-uppercase py-2"
-    (click)="clockIn()"
-  >
-    <mat-icon class="me-2">access_time</mat-icon>
-    <span class="mt-2">
-      Clock In
-    </span>
-  </button>
+  <div *ngIf="isLoaded" class="w-100">
+    <div
+      *ngIf="!clockedIn?.clockOut"
+      class="text-center"
+    >
+      <button
+        *ngIf="!clockedIn; else elseBlock"
+        mat-raised-button
+        type="button"
+        class="text-uppercase py-2"
+        (click)="clockIn()"
+      >
+        <mat-icon class="me-2">access_time</mat-icon>
+        <span class="mt-2">
+          Clock In
+        </span>
+      </button>
+      <ng-template #elseBlock>
+        <button
+          mat-raised-button
+          type="button"
+          class="text-uppercase py-2"
+          (click)="clockOut()"
+        >
+          <mat-icon class="me-2">access_time</mat-icon>
+          <span class="mt-2">
+            Clock Out
+          </span>
+        </button>
+      </ng-template>
+    </div>
+
+    <ng-template
+      ngFor
+      let-group
+      [ngForOf]="groupedList"
+    >
+      <mat-list cols="2" rowHeight="1:1">
+        <div mat-subheader>
+          <span class="fs-6 fw-bold text-white me-1">
+            {{ group.clockedIn }}
+          </span>
+          <span *ngIf="group.isLate" class="text-warning">
+            (Late)
+          </span>
+        </div>
+        <mat-list-item>
+          <mat-card class="w-100 d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-uppercase">
+              Clocked In:
+            </span>
+            <span>
+              {{ group.clockIn }}
+            </span>
+          </mat-card>
+        </mat-list-item>
+        <mat-list-item *ngIf="group.clockOut">
+          <mat-card class="w-100 d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-uppercase">
+              Clocked Out:
+            </span>
+            <span>
+              {{ group.clockOut }}
+            </span>
+          </mat-card>
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </div>
 </app-blank>

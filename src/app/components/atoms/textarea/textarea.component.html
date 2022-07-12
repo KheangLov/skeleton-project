@@ -1,4 +1,19 @@
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Address 2</mat-label>
-  <textarea matInput></textarea>
+<mat-form-field
+  appDynamicAttr
+  class="w-100"
+  [appearance]="appearance"
+  [attributeList]="wrapperAttributes"
+  [formGroup]="formGroup.value"
+>
+  <mat-label>{{ label }}</mat-label>
+  <textarea
+    matInput
+    appDynamicAttr
+    [name]="name"
+    [attributeList]="attributes"
+    [formControlName]="name"
+  ></textarea>
+  <mat-error *ngIf="error">
+    {{ error }}
+  </mat-error>
 </mat-form-field>

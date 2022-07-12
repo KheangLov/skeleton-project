@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, Optional, ViewChild, ViewContainerRef } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forEach, isEmpty, isNil, pick } from 'lodash';
+import { LateReasonComponent } from 'src/app/pages/admin/clock-in/late-reason/late-reason.component';
 
 import { UserCreateComponent } from 'src/app/pages/admin/user/user-create/user-create.component';
 import { UserEditComponent } from 'src/app/pages/admin/user/user-edit/user-edit.component';
@@ -9,6 +10,7 @@ import { IDialogData } from 'src/app/types/core';
 const COMPONENTS: { [key: string]: any } = {
   ['user_create']: UserCreateComponent,
   ['user_edit']: UserEditComponent,
+  ['late_reason']: LateReasonComponent,
 };
 
 @Component({
